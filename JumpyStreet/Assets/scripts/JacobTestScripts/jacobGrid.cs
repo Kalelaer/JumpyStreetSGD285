@@ -6,6 +6,8 @@ using UnityEngine;
 public class jacobGrid : MonoBehaviour
 {
 
+    private NodeHandler nh;
+
     [SerializeField] GameObject masterSpawner;
     [SerializeField] GameObject rowLayout;
     [SerializeField] GameObject node;
@@ -46,8 +48,11 @@ public class jacobGrid : MonoBehaviour
                     Vector3 spawner = new Vector3(x, newRow.transform.position.y + .5f, (newRow.transform.position.z));
                     GameObject newNode = Instantiate(node, spawner, Quaternion.identity);
                     newNode.transform.parent = rowArray[rowIndex].transform;
+
                     nodeArray.Add(newNode);
-                    Debug.Log("spawned a new node");
+                    int nodeLength = nodeArray.ToArray().Length;
+                    newNode.GetComponent<NodeHandler>().CreateNode(nodeLength);
+                    //Debug.Log("spawned a new node");
 
                 }
                 rowIndex++;
