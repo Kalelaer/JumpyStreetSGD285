@@ -22,12 +22,6 @@ public class Node
     public Node(int index, NodeHandler handler){
         _arrayLocation = index;
         NH = handler;
-        // if(location == 0){
-        //     leftNodeType = "empty";
-        // }
-        // if(location == 29){
-        //     rightNodeType == "empty";
-        // }
     }
     public void SetVisual(Group item){
         Visual = item.Object;

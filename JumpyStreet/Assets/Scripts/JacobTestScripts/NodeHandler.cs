@@ -30,27 +30,40 @@ public class NodeHandler : MonoBehaviour
     [SerializeField] List<Group> spawnables;
     public Node node;
     public GameObject thisObject;
+    public int percentToSpawn;  //set by Grid
+    private int willSpawnObject;
+    private Group[] placeholderArray;
+
     private void Awake()
     {
         thisObject = this.gameObject;
-        Group[] placeholderArray = spawnables.ToArray();
+        placeholderArray = spawnables.ToArray();
+        willSpawnObject = Random.Range(1, 101);
+        //print(willSpawnObject);
+
+    }
+
+    public void SpawnObject(int percToSpawn)
+    {
+        percentToSpawn = percToSpawn;
         int spawnablesLength = placeholderArray.Length;
-        //print(spawnablesLength);
-        int willSpawnObject = Random.Range(1, 101);
-        print(willSpawnObject);
-        if (willSpawnObject > 50) { 
-            objectSelector = Random.Range(0, spawnablesLength);
-            //print(objectSelector);
+        if (willSpawnObject < percentToSpawn)
+        {
+            objectSelector = Random.Range(1, spawnablesLength-1);
         }
         else
         {
             objectSelector = 0;
         }
     }
+
+    //creates the node class
     public void CreateNode(int index){
         node = new Node(index, gameObject.GetComponent<NodeHandler>());
         node.SetVisual(spawnables[objectSelector]);
     }
+
+    //sets the visual object on the node. This is called by the node class
     public void SetObject(GameObject item, float offset){
         Vector3 objectRotation = new Vector3(-90,0,0);
         Vector3 objectOffset = new Vector3(thisObject.transform.position.x, thisObject.transform.position.y + offset, thisObject.transform.position.z);
