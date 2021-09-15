@@ -11,36 +11,55 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+public class GameMenuController : MonoBehaviour
 {
+    private int playerScoreNumber;
+    public int playerScore {
+        set { playerScoreNumber = value;
+            menuScoreText.text = playerScoreNumber.ToString();
+            gameScoreText.text = playerScoreNumber.ToString();
+        }
+        get {return playerScoreNumber;}
+    }
+
     private AudioSource soundPlayer;
     private AudioClip menuBack;
     private AudioClip menuForward;
     private AudioClip menuSelect;
-    [SerializeField] private string nextLevel;
 
-    [SerializeField] private GameObject menuPanel;
-    [SerializeField] private GameObject helpPanel;
-    [SerializeField] private GameObject creditsPanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject scorePanel;
+    [SerializeField] private GameObject losePanel;
+    [SerializeField] private Text menuScoreText;
+    [SerializeField] private Text gameScoreText;
 
-    
+
     private void Awake() {
         SetUpAudio();
         SetUpMenu();
+        playerScore = 0;
+    }
+
+    private void Update() {
+        if (!losePanel.activeInHierarchy) {
+            if (Input.GetKeyUp(KeyCode.Escape)) {
+                OnEscapeKeyPress();
+            }
+        }
     }
 
     //This should make sure the menu sound gets to play before the scene is changed.
-    public void OnPlayButtonClick() {
-        StartCoroutine(PlayButtonSound());
+    public void OnMenuButtonClick() {
+        StartCoroutine(MenuButtonSound());
     }
-    private IEnumerator PlayButtonSound() {
+    private IEnumerator MenuButtonSound() {
         soundPlayer.PlayOneShot(menuForward);
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene(nextLevel);
+        SceneManager.LoadScene("MainMenu");
         yield return null;
     }
-    
-    // Similar to the play button.
+
+    // Similar to the menu button.
     public void OnQuitButtonClick() {
         StartCoroutine(QuitButtonSound());
     }
@@ -51,21 +70,10 @@ public class MenuController : MonoBehaviour
         yield return null;
     }
 
-    public void OnHelpButtonClick() {
-        soundPlayer.PlayOneShot(menuSelect);
-        menuPanel.SetActive(false);
-        helpPanel.SetActive(true);
-    }
-
-    public void OnCreditsButtonClick() {
-        soundPlayer.PlayOneShot(menuSelect);
-        menuPanel.SetActive(false);
-        creditsPanel.SetActive(true);
-    }
-
-    public void OnBackButtonClick() {
-        soundPlayer.PlayOneShot(menuBack);
+    public void OnResumeuttonClick() {
+        soundPlayer.PlayOneShot(menuForward);
         SetUpMenu();
+        //Call for resume game.
     }
 
     private void SetUpAudio() {
@@ -76,9 +84,15 @@ public class MenuController : MonoBehaviour
     }
 
     public void SetUpMenu() {
-        menuPanel.SetActive(true);
-        creditsPanel.SetActive(false);
-        helpPanel.SetActive(false);
+        pausePanel.SetActive(false);
+        scorePanel.SetActive(true);
+        losePanel.SetActive(false);
     }
 
+    public void OnEscapeKeyPress() {
+        soundPlayer.PlayOneShot(menuSelect);
+        pausePanel.SetActive(true);
+        scorePanel.SetActive(false);
+        //Call for pause game.
+    }
 }

@@ -1181,7 +1181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c99b837761b8f274c942565e23fc39eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevel: MainGamer
+  nextLevel: MainGame
   menuPanel: {fileID: 1093923084}
   helpPanel: {fileID: 2087351725}
   creditsPanel: {fileID: 1538813613}
