@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -162,11 +162,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 569717073}
+  - component: {fileID: 569717075}
   - component: {fileID: 569717072}
   - component: {fileID: 569717071}
   - component: {fileID: 569717070}
-  - component: {fileID: 569717075}
-  - component: {fileID: 569717074}
   m_Layer: 0
   m_Name: spawner
   m_TagString: Untagged
@@ -251,34 +250,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &569717074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 569717069}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 294d0750d98dd79498379c6d044eafa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterSpawner: {fileID: 0}
-  rowLayout: {fileID: 2537046564418772529, guid: 914334029fa1f7d4e811c9e4cccbf676, type: 3}
-  node: {fileID: 3120870944099353051, guid: a476ff21c35d23540a68bb1eb6d5e3d4, type: 3}
-  rowSelector:
-  - {fileID: 2537046564418772529, guid: 914334029fa1f7d4e811c9e4cccbf676, type: 3}
-  - {fileID: 340923865347362035, guid: 1a5bcaf152db4f140baf57eea7a394ea, type: 3}
-  nodeArray: []
-  rowList: []
-  basePercentToSpawn: 10
-  percentToSpawn: 0
-  rowIndex: 0
-  maxRows: 25
-  startingNodeX: -15
-  endNodeX: 15
-  isPlaying: 0
-  difOffset: 0
 --- !u!114 &569717075
 MonoBehaviour:
   m_ObjectHideFlags: 0

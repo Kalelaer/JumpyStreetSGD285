@@ -78,11 +78,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4357521120394328119, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4873181680327141953, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
       propertyPath: m_Name
       value: VisualNode
+      objectReference: {fileID: 0}
+    - target: {fileID: 4873181680327141953, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7029485362601866100, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
       propertyPath: m_RootOrder

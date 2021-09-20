@@ -17,8 +17,6 @@ public class Node
         set{visual = value;}
     }
 
-
-
     public Node(int index, NodeHandler handler){
         _arrayLocation = index;
         NH = handler;

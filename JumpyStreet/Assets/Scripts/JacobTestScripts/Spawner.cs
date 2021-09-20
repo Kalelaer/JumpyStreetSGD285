@@ -6,11 +6,12 @@ public class Spawner : MonoBehaviour
 {
     [Header("Base Objects")]
     [SerializeField] GameObject[] mainRowsObjects = new GameObject[4];//0-Forest 1-Water 2-Sand 3-Road
-    [SerializeField] GameObject node; 
     [SerializeField] GameObject StartingZone;
     [SerializeField] GameObject masterSpawner;
-    [SerializeField] List<GameObject> nodeArray;
-    [SerializeField] int rowWidth;
+
+    [Header("Biome Info")]
+    [SerializeField] string currentBiome;
+    [SerializeField] int remainingBiome;
 
     [Header("Active Rows")]
     [SerializeField] List<GameObject> activeRows;//main rows in play
@@ -28,12 +29,13 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         Vector3 startingZoneLocation = new Vector3(0,1,-12);
-        Instantiate(StartingZone,startingZoneLocation,Quaternion.identity);
+        CreateStartingZone();
+        //Instantiate(StartingZone,startingZoneLocation,Quaternion.identity);
         
     }
 
     public void SpawnRow(){
-
+        activeRows.Add(Instantiate(row)
     }
 
     //Use this to grab a prefab of the starting zone
