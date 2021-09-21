@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8587984876965203966}
   - component: {fileID: 3648455890002969223}
+  - component: {fileID: 1744584020540399731}
   m_Layer: 0
   m_Name: node
   m_TagString: Untagged
@@ -69,6 +70,19 @@ MonoBehaviour:
     visual: {fileID: 0}
   thisObject: {fileID: 0}
   percentToSpawn: 0
+--- !u!114 &1744584020540399731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3120870944099353051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b344ce145dcff5944ab1598fa2fe1744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetNode: {fileID: 0}
 --- !u!1001 &2974365246897588703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78,7 +92,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4357521120394328119, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4873181680327141953, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
       propertyPath: m_Name

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 211061625854056634}
+  - component: {fileID: 5269449630752927370}
   - component: {fileID: 1011880604107440130}
   - component: {fileID: 6315309640996614470}
   - component: {fileID: 3346178090267385162}
-  - component: {fileID: 4388707035483273180}
   m_Layer: 0
   m_Name: rowWater
   m_TagString: Untagged
@@ -34,6 +34,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0.2, z: 0}
+--- !u!114 &5269449630752927370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340923865347362035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7441d44f869e61743977ff4836fdd0d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rowType: 2
+  node: {fileID: 3120870944099353051, guid: a476ff21c35d23540a68bb1eb6d5e3d4, type: 3}
+  nodeArray: []
+  rowWidth: 0
 --- !u!33 &1011880604107440130
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97,19 +113,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.8, z: 1}
   m_Center: {x: 0, y: -0.2, z: 0}
---- !u!114 &4388707035483273180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 340923865347362035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e44fbf6addacc1f4a9572129d3766c89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rowType: 2
-  row:
-    _rowNumber: 0
-    rowObject: {fileID: 0}

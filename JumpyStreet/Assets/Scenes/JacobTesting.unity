@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 470591267}
+  - component: {fileID: 470591268}
   m_Layer: 0
   m_Name: MainController
   m_TagString: Untagged
@@ -153,6 +154,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &470591268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470591266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4b77fa5aaf20c4ba2ce5640d927183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
+  masterSpawner: {fileID: 569717069}
+  backwardsMovementCount: 0
 --- !u!1 &569717069
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,19 +283,34 @@ MonoBehaviour:
   - {fileID: 340923865347362035, guid: 1a5bcaf152db4f140baf57eea7a394ea, type: 3}
   - {fileID: 7497220915474283037, guid: 7e2142027df9f034e899cecf6e08bb48, type: 3}
   - {fileID: 6017035489699093116, guid: d7ac9584bf09f954c967d2b96b9c4cc5, type: 3}
-  node: {fileID: 3120870944099353051, guid: a476ff21c35d23540a68bb1eb6d5e3d4, type: 3}
   StartingZone: {fileID: 5198802493523294435, guid: 5172874f50d47744cb211b25c819505c, type: 3}
-  masterSpawner: {fileID: 0}
-  nodeArray: []
+  masterSpawner: {fileID: 569717069}
+  node: {fileID: 3120870944099353051, guid: a476ff21c35d23540a68bb1eb6d5e3d4, type: 3}
   rowWidth: 15
+  biomeList:
+  - _biomeType: 0
+    _biomeName: forest
+    _maxBiomeLength: 6
+  - _biomeType: 3
+    _biomeName: desert
+    _maxBiomeLength: 5
+  - _biomeType: 2
+    _biomeName: water
+    _maxBiomeLength: 3
+  - _biomeType: 1
+    _biomeName: road
+    _maxBiomeLength: 4
+  previousBiome: 
+  currentBiome: 
+  remainingBiome: 0
   activeRows: []
-  maxForest: 0
+  maxForest: 8
   forestRows: []
-  maxRiver: 0
+  maxRiver: 8
   riverRows: []
-  maxRoad: 0
+  maxRoad: 8
   roadRows: []
-  maxDesert: 0
+  maxDesert: 8
   desertRows: []
 --- !u!1 &595482285
 GameObject:
