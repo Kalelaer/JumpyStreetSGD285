@@ -28,7 +28,7 @@ public class NodeHandler : MonoBehaviour
 {
     private int objectSelector;
     [SerializeField] List<Group> spawnables;
-    public Node node;
+    public NodeClass node;
     public GameObject thisObject;
     public int percentToSpawn;  //set by Grid
     private int willSpawnObject;
@@ -59,7 +59,7 @@ public class NodeHandler : MonoBehaviour
 
     //creates the node class
     public void CreateNode(int index){
-        node = new Node(index, gameObject.GetComponent<NodeHandler>());
+        node = new NodeClass(index, gameObject.GetComponent<NodeHandler>());
         node.SetVisual(spawnables[objectSelector]);
     }
 

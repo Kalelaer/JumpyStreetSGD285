@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RowHandler : MonoBehaviour
+public class RowHandler : Spawner
 {
-    public enum Type{ forest, road, water, desert };
     public Type rowType = new Type();
 
     private int rowNumber;
