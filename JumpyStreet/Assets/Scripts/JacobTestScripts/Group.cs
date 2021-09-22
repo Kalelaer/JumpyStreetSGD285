@@ -5,21 +5,34 @@ using UnityEngine;
 [System.Serializable]
 public class Group
 {
-    [SerializeField] float _offset;
-    [SerializeField] GameObject _object;
+    [SerializeField] Biome.Type _biomeType;
     [SerializeField] string _tileType;
+    [SerializeField] float _offset;
+    [SerializeField] float _rotationOffset;
+    [SerializeField] GameObject _object;
+
 
     public float Offset{
-        get {return _offset;}
-        set {_offset = value;}
+        get { return _offset; }
+        set { _offset = value; }
+    }
+    public float RotationOffset
+    {
+        get { return _rotationOffset; }
+        set { _rotationOffset = value; }
     }
     public GameObject Object{
-        get {return _object;}
-        set {_object = value;}
+        get { return _object; }
+        set { _object = value; }
     }
     public string TileType{
-        get {return _tileType;}
-        set {_tileType = value;}
+        get { return _tileType; }
+        set { _tileType = value; }
+    }
+    public Biome.Type BiomeType
+    {
+        get { return _biomeType; }
+        set { _biomeType = value; }
     }
 
 }

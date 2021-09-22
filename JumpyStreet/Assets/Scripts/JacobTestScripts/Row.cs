@@ -9,7 +9,14 @@ public class Row : MonoBehaviour
     [SerializeField] GameObject node;
     [SerializeField] List<GameObject> nodeArray;
     [SerializeField] int rowWidth;
-    public void SpawnNode(int width, /*optional*/ bool isHazard = false, int rowVal = 30)
+    public Vector3 targetPos;
+    public bool canMove = false;
+
+    private void FixedUpdate()
+    {
+        
+    }
+    public void SpawnNode(int width, /*optional*/ bool isHazard = false, int rowVal = 30, bool isBackWall = false)
     {
         rowValue = rowVal;
         rowWidth = width;
@@ -25,6 +32,17 @@ public class Row : MonoBehaviour
         else{
             for(int i = -width; i <= width; i++){
                 GameObject newNode = Instantiate(node,new Vector3(i,this.transform.position.y+.5f,this.transform.position.z), Quaternion.identity);
+                bool isWall;
+                if (i<-12 || i > 12 || isBackWall)
+                {
+                    isWall = true;
+                }
+                else
+                {
+                    isWall = false;
+                }
+
+                newNode.GetComponent<Node>().SetNode(isWall,rowType);
                 nodeArray.Add(newNode);
             }
         }

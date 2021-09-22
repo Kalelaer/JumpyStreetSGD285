@@ -38,10 +38,13 @@ public class Spawner : MonoBehaviour
         SpawnInitial();
     }
 
+
     public void MoveRows(){
         List<GameObject> placeholderList = new List<GameObject>{};
         foreach(GameObject row in activeRows){
             //moves the rows
+            row.GetComponent<Row>().targetPos = new Vector3(row.transform.position.x, row.transform.position.y, row.transform.position.z - 1f);
+            //bool row.canMove = true
             row.transform.position = new Vector3(row.transform.position.x, row.transform.position.y, row.transform.position.z-1f);
             row.GetComponent<Row>().rowValue--;
 
@@ -114,7 +117,7 @@ public class Spawner : MonoBehaviour
         else{
             tryAgain = false;
         }
-        print(currentBiome);
+        print($" current biome {currentBiome}, Biome Length {remainingBiome}");
     }
     public void SpawnRow( int rowVal, /*optional*/ float offsetOverride = 1f){
         //increment player score here
@@ -153,8 +156,9 @@ public class Spawner : MonoBehaviour
         //Spawns the Row
         Vector3 rowSpawn = new Vector3(masterSpawner.transform.position.x, masterSpawner.transform.position.y - 0.25f, masterSpawner.transform.position.z - zOffset);
         GameObject newRow = Instantiate(objectToSpawn, rowSpawn, Quaternion.identity);
+
         //spawns nodes
-        if(currentBiome == "road" || currentBiome == "water"){
+        if(currentBiome == "road" || currentBiome == "water" ){
             newRow.GetComponent<Row>().SpawnNode(rowWidth,true);
         }
         else{
@@ -163,6 +167,8 @@ public class Spawner : MonoBehaviour
         newRow.GetComponent<Row>().rowValue = rowVal;
         activeRows.Add(newRow);
     }
+
+
     private void SpawnInitial(){
         int rowValue = 11;
         for(int i=19;i>0;i--){
@@ -175,41 +181,26 @@ public class Spawner : MonoBehaviour
     //Use this to grab a prefab of the starting zone
     private void CreateStartingZone(){
         masterSpawner = this.gameObject;
-        int percentToSpawn;
         float zOffset = 20f;
         //Spawn Starting zone
         int rowVal = 10;
         for(int i = 0; i < 10; i++){
-                //Spawns the rows    
-                Vector3 rowSpawn = new Vector3(masterSpawner.transform.position.x, masterSpawner.transform.position.y - 0.25f, masterSpawner.transform.position.z - zOffset);
-                GameObject newRow = Instantiate(mainRowsObjects[0], rowSpawn, Quaternion.identity);
-                newRow.GetComponent<Row>().rowValue = rowVal;
-                activeRows.Add(newRow);
-                rowVal--;
-            for (float x = -rowWidth; x <= rowWidth; x += 1f){
+            //Spawns the rows    
+            Vector3 rowSpawn = new Vector3(masterSpawner.transform.position.x, masterSpawner.transform.position.y - 0.25f, masterSpawner.transform.position.z - zOffset);
+            GameObject newRow = Instantiate(mainRowsObjects[0], rowSpawn, Quaternion.identity);
+            newRow.GetComponent<Row>().rowValue = rowVal;
+            activeRows.Add(newRow);
 
-                if (x < -10 || x > 10 || i >=5)
-                {   //Spawn Walls
-                    percentToSpawn = 110;                        
-                }
-                else
-                {   //be empty
-                    percentToSpawn = -1;
-                }
 
-                //spawns the nodes
-                Vector3 spawner = new Vector3(x, newRow.transform.position.y + .5f, (newRow.transform.position.z));
-                GameObject newNode = Instantiate(node, spawner, Quaternion.identity);
-                //sets the node as a child of the row
-                newNode.transform.parent = newRow.transform;
-                //spawns the object on the node
-                newNode.GetComponent<NodeHandler>().SpawnObject(percentToSpawn);
-                //nodeArray.Add(newNode);
-                //int nodeLength = nodeArray.ToArray().Length;
-                //creates node class attached to he object
-                //newNode.GetComponent<NodeHandler>().CreateNode(nodeLength);
-            
+            if (i > 6)
+            {//spawn back wall
+                newRow.GetComponent<Row>().SpawnNode(rowWidth, false, rowVal, true);
             }
+            else
+            {
+                newRow.GetComponent<Row>().SpawnNode(rowWidth, false, rowVal, false);
+            }
+            rowVal--;
             zOffset++;
         }
     }
