@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public Spawner spawner;
     [SerializeField] GameObject masterSpawner;
     [SerializeField] int backwardsMovementCount = 0;
+    [SerializeField] GameObject playerCharacter;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,4 +24,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void SpawnPlayer() {
+
+    }
+
+    private void PerformHop() {
+
+    }
+
+    private bool IsGround() {
+        bool isGround = false;
+        return isGround;
+    }
+
+    private bool IsPlatform() {
+        bool isPlatform = false;
+        return isPlatform;
+    }
 }

@@ -30,6 +30,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] int maxDesert;
     [SerializeField] List<GameObject> desertRows;
 
+    [Header("Row Spawn/Move Parameters")]
+    [SerializeField] private float rowMoveSpeed;
+
     private void Start()
     {
         Vector3 startingZoneLocation = new Vector3(0,1,-12);
@@ -43,9 +46,13 @@ public class Spawner : MonoBehaviour
         List<GameObject> placeholderList = new List<GameObject>{};
         foreach(GameObject row in activeRows){
             //moves the rows
-            row.GetComponent<Row>().targetPos = new Vector3(row.transform.position.x, row.transform.position.y, row.transform.position.z - 1f);
-            //bool row.canMove = true
-            row.transform.position = new Vector3(row.transform.position.x, row.transform.position.y, row.transform.position.z-1f);
+            if(row.GetComponent<Row>().canMove == true) {
+                row.GetComponent<Row>().targetPos = new Vector3(row.transform.position.x, row.transform.position.y, row.transform.position.z - 1f);
+                row.GetComponent<Row>().canMove = false;
+                //row.transform.position = new Vector3(row.transform.position.x, row.transform.position.y, row.transform.position.z-1f);
+                StartCoroutine(MoveRowTowards(row));
+            }
+            
             row.GetComponent<Row>().rowValue--;
 
             //Row Removal
@@ -153,12 +160,52 @@ public class Spawner : MonoBehaviour
                 break;
         }
 
-        //Spawns the Row
+        //Spawns the Row //This can probably be combined with the function above
         Vector3 rowSpawn = new Vector3(masterSpawner.transform.position.x, masterSpawner.transform.position.y - 0.25f, masterSpawner.transform.position.z - zOffset);
-        GameObject newRow = Instantiate(objectToSpawn, rowSpawn, Quaternion.identity);
+        GameObject newRow = null;
+        bool oldRowInArray = false;
+        switch (currentBiome) {
+            case "forest":
+                if(forestRows.Count > 0) {
+                    newRow = forestRows[0];
+                    forestRows.RemoveAt(0);
+                    newRow.transform.position = rowSpawn;
+                    oldRowInArray = true;
+                }
+                break;
+            case "desert":
+                if (desertRows.Count > 0) {
+                    newRow = desertRows[0];
+                    desertRows.RemoveAt(0);
+                    newRow.transform.position = rowSpawn;
+                    oldRowInArray = true;
+                }
+                break;
+            case "water":
+                if (riverRows.Count > 0) {
+                    newRow = riverRows[0];
+                    riverRows.RemoveAt(0);
+                    newRow.transform.position = rowSpawn;
+                    oldRowInArray = true;
+                }
+                break;
+            case "road":
+                if (roadRows.Count > 0) {
+                    newRow = roadRows[0];
+                    roadRows.RemoveAt(0);
+                    newRow.transform.position = rowSpawn;
+                    oldRowInArray = true;
+                }
+                break;
+        }
+        if (!oldRowInArray) {
+            newRow = Instantiate(objectToSpawn, rowSpawn, Quaternion.identity);
+        }
+        newRow.SetActive(true);
+
 
         //spawns nodes
-        if(currentBiome == "road" || currentBiome == "water" ){
+        if (currentBiome == "road" || currentBiome == "water" ){
             newRow.GetComponent<Row>().SpawnNode(rowWidth,true);
         }
         else{
@@ -166,6 +213,7 @@ public class Spawner : MonoBehaviour
         }
         newRow.GetComponent<Row>().rowValue = rowVal;
         activeRows.Add(newRow);
+        newRow.GetComponent<Row>().canMove = true;
     }
 
 
@@ -202,6 +250,28 @@ public class Spawner : MonoBehaviour
             }
             rowVal--;
             zOffset++;
+            newRow.GetComponent<Row>().canMove = true;
         }
+    }
+
+    private IEnumerator MoveRowTowards(GameObject row) {
+        float step = rowMoveSpeed * Time.deltaTime;
+        bool rowIsMoved = false;
+        while (!rowIsMoved) {
+            if(row == null) {
+                yield return null;
+            }else if(row.transform.position != row.GetComponent<Row>().targetPos) {
+                row.transform.position = Vector3.MoveTowards(row.transform.position, row.GetComponent<Row>().targetPos, step);
+                if (Vector3.Distance(row.transform.position, row.GetComponent<Row>().targetPos) < 0.001f) {
+                    row.transform.position = row.GetComponent<Row>().targetPos;
+                    rowIsMoved = true;
+                }
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        if(row != null) {
+            row.GetComponent<Row>().canMove = true;
+        }
+        yield return null;
     }
 }
