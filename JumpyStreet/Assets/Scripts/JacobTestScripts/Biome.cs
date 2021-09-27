@@ -8,6 +8,7 @@ public class Biome
     [SerializeField] Type _biomeType;
     [SerializeField] string _biomeName;
     [SerializeField] int _maxBiomeLength;
+    [SerializeField] bool _isHazard;
 
     public Type BiomeType{
         get{ return _biomeType;}
@@ -21,6 +22,9 @@ public class Biome
         get{ return _maxBiomeLength; }
         set{ _maxBiomeLength = value; }
     }
-
+    public bool IsHazard {
+        get { return _isHazard; }
+        set { _isHazard = value; }
+    }
 
 }

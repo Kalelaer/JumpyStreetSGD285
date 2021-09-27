@@ -11,6 +11,7 @@ public class Row : MonoBehaviour
     [SerializeField] int rowWidth;
     public Vector3 targetPos;
     public bool canMove = false;
+    public bool isBack;
 
     private void FixedUpdate()
     {
@@ -20,30 +21,48 @@ public class Row : MonoBehaviour
     {
         rowValue = rowVal;
         rowWidth = width;
-        if(isHazard){
-            GameObject nodeLeft,nodeRight;
-            nodeLeft = Instantiate(node,new Vector3(-width,this.transform.position.y+.5f,this.transform.position.z), Quaternion.identity);
-            nodeRight = Instantiate(node,new Vector3(width,this.transform.position.y+.5f,this.transform.position.z), Quaternion.identity);
-            nodeLeft.GetComponent<Node>().targetNode = nodeRight;
-            nodeRight.GetComponent<Node>().targetNode = nodeLeft;
-            nodeArray.Add(nodeRight);
-            nodeArray.Add(nodeLeft);
-        }
-        else{
-            for(int i = -width; i <= width; i++){
-                GameObject newNode = Instantiate(node,new Vector3(i,this.transform.position.y+.5f,this.transform.position.z), Quaternion.identity);
-                bool isWall;
-                if (i<-12 || i > 12 || isBackWall)
-                {
-                    isWall = true;
-                }
-                else
-                {
-                    isWall = false;
-                }
+        if (nodeArray.ToArray().Length >= 31) {
+            int nodeLength = nodeArray.ToArray().Length;
 
-                newNode.GetComponent<Node>().SetNode(isWall,rowType);
-                nodeArray.Add(newNode);
+            for (int i = 0; i<nodeLength; i++) {
+                //bool wall = nodeArray[i].GetComponent<Node>().isWall;
+
+                /*if (i < -12 || i > 12 || isBackWall) {
+                    nodeArray[i].GetComponent<Node>().isWall = true;
+                }
+                else {
+                    nodeArray[i].GetComponent<Node>().isWall = false;
+                }*/
+                //nodeArray[i].GetComponent<Node>().SetNode(wall, rowType);
+                nodeArray[i].GetComponent<Node>().SelectAndSpawnObject();            
+            }
+
+        }
+        else {
+            //new rows only
+            if (isHazard) {
+                GameObject nodeLeft, nodeRight;
+                nodeLeft = Instantiate(node, new Vector3(-width, this.transform.position.y + .5f, this.transform.position.z), Quaternion.identity);
+                nodeRight = Instantiate(node, new Vector3(width, this.transform.position.y + .5f, this.transform.position.z), Quaternion.identity);
+                nodeLeft.GetComponent<Node>().targetNode = nodeRight;
+                nodeRight.GetComponent<Node>().targetNode = nodeLeft;
+                nodeArray.Add(nodeRight);
+                nodeArray.Add(nodeLeft);
+            }
+            else {
+                for (int i = -width; i <= width; i++) {
+                    GameObject newNode = Instantiate(node, new Vector3(i, this.transform.position.y + .5f, this.transform.position.z), Quaternion.identity);
+                    bool isWall;
+                    if (i < -12 || i > 12 || isBackWall) {
+                        isWall = true;
+                    }
+                    else {
+                        isWall = false;
+                    }
+
+                    newNode.GetComponent<Node>().SetNode(isWall, rowType);
+                    nodeArray.Add(newNode);
+                }
             }
         }
 

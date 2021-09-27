@@ -10,13 +10,13 @@ public class Node : MonoBehaviour
     [Header("Obstical List")]
     [SerializeField] List<Group> selectorGroup;
     [SerializeField] GameObject currentObject;
-    [SerializeField] int percentToSpawn;
+    public int percentToSpawn;
     [SerializeField] int targetSpawn;
 
     [Header("Node Information")]
     [SerializeField] Biome.Type nodeBiome;
-    [SerializeField] bool isWall;
-    [SerializeField] GameObject child;
+    public bool isWall;
+    public GameObject child;
 
     private bool freshNode = true;
     private void Start()
@@ -25,6 +25,7 @@ public class Node : MonoBehaviour
     }
     private void Awake()
     {
+
         //sets percent to spawn
         if (!freshNode)
         {
@@ -58,10 +59,19 @@ public class Node : MonoBehaviour
         SelectAndSpawnObject();
     }
 
-    private void SelectAndSpawnObject()
+    public void SelectAndSpawnObject()
     {
+        percentToSpawn = 0;
         if (child != null) {
-            Destroy(child); ;
+            print("killing the child");
+            Destroy(child); 
+        }
+
+        if (isWall) {
+            percentToSpawn = 110; //always spawn wall
+        }
+        else {
+            percentToSpawn = Random.Range(1, 101); // used to spawn an obstical later
         }
 
         int objectListLength = selectorGroup.ToArray().Length;

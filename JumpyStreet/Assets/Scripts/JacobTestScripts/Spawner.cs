@@ -14,7 +14,9 @@ public class Spawner : MonoBehaviour
     [Header("Biome Info")]
     [SerializeField] List<Biome> biomeList;
     [SerializeField] string previousBiome;
+    [SerializeField] private bool previousBiomeHazard;
     [SerializeField] string currentBiome;
+    [SerializeField] private bool currentBiomeHazard;
     [SerializeField] int remainingBiome;
 
     [Header("Active Rows")]
@@ -58,40 +60,52 @@ public class Spawner : MonoBehaviour
 
             //Row Removal
             if(row.GetComponent<Row>().rowValue <= 0){
-                row.SetActive(false);
-                if(row.GetComponent<Row>().rowType == Biome.Type.forest){
-                    if(forestRows.ToArray().Length < maxForest){
-                        forestRows.Add(row);
+                int nodeCount = row.GetComponent<Row>().nodeArray.Count;
+                foreach(GameObject node in row.GetComponent<Row>().nodeArray) {
+                    Debug.Log("Destroyin all the children");
+                    node.GetComponent<Node>().percentToSpawn = 0;
+                    Destroy(node.GetComponent<Node>().child);
+                }
+                if (row.GetComponent<Row>().isBack) {
+                    Destroy(row);
+                }
+                else {
+                    row.SetActive(false);
+                    if (row.GetComponent<Row>().rowType == Biome.Type.forest) {
+                        if (forestRows.ToArray().Length < maxForest) {
+                            forestRows.Add(row);
+                        }
+                        else {
+                            Destroy(row);
+
+                        }
                     }
-                    else{
-                        Destroy(row);
-                        
+                    else if (row.GetComponent<Row>().rowType == Biome.Type.desert) {
+                        if (desertRows.ToArray().Length < maxDesert) {
+                            desertRows.Add(row);
+                        }
+                        else {
+                            Destroy(row);
+                        }
+                    }
+                    else if (row.GetComponent<Row>().rowType == Biome.Type.water) {
+                        if (riverRows.ToArray().Length < maxRiver) {
+                            riverRows.Add(row);
+                        }
+                        else {
+                            Destroy(row);
+                        }
+                    }
+                    else if (row.GetComponent<Row>().rowType == Biome.Type.road) {
+                        if (roadRows.ToArray().Length < maxRoad) {
+                            roadRows.Add(row);
+                        }
+                        else {
+                            Destroy(row);
+                        }
                     }
                 }
-                else if(row.GetComponent<Row>().rowType == Biome.Type.desert){
-                    if(desertRows.ToArray().Length < maxDesert){
-                        desertRows.Add(row);
-                    }
-                    else{
-                        Destroy(row);
-                    }
-                }
-                else if(row.GetComponent<Row>().rowType == Biome.Type.water){
-                    if(riverRows.ToArray().Length < maxRiver){
-                        riverRows.Add(row);
-                    }
-                    else{
-                        Destroy(row);
-                    }
-                }
-                else if(row.GetComponent<Row>().rowType == Biome.Type.road){
-                    if(roadRows.ToArray().Length < maxRoad){
-                        roadRows.Add(row);
-                    }
-                    else{
-                        Destroy(row);
-                    }
-                }
+                
             }
             else{
                 placeholderList.Add(row);
@@ -106,12 +120,13 @@ public class Spawner : MonoBehaviour
         int biomeSelector = Random.Range(0,4);
         previousBiome = currentBiome;
         bool tryAgain = false;
+        previousBiomeHazard = currentBiomeHazard;
         //first try
         currentBiome = biomeList[biomeSelector].BiomeName;
         remainingBiome = Random.Range(1,biomeList[biomeSelector].MaxBiomeLength+1);
+        currentBiomeHazard = biomeList[biomeSelector].IsHazard;
 
-
-        if(currentBiome == previousBiome){
+        if(currentBiome == previousBiome || previousBiomeHazard == currentBiomeHazard){
             if(!tryAgain){//try once
                 tryAgain = true;
                 ChooseBiome();
@@ -202,6 +217,8 @@ public class Spawner : MonoBehaviour
         if (!oldRowInArray) {
             newRow = Instantiate(objectToSpawn, rowSpawn, Quaternion.identity);
         }
+
+        newRow.GetComponent<Row>().targetPos = new Vector3(newRow.transform.position.x, newRow.transform.position.y, newRow.transform.position.z);
         newRow.SetActive(true);
 
 
@@ -244,6 +261,7 @@ public class Spawner : MonoBehaviour
             if (i > 6)
             {//spawn back wall
                 newRow.GetComponent<Row>().SpawnNode(rowWidth, false, rowVal, true);
+                newRow.GetComponent<Row>().isBack = true;
             }
             else
             {
@@ -252,6 +270,7 @@ public class Spawner : MonoBehaviour
             rowVal--;
             zOffset++;
             newRow.GetComponent<Row>().canMove = true;
+            newRow.GetComponent<Row>().targetPos = new Vector3(newRow.transform.position.x, newRow.transform.position.y, newRow.transform.position.z);
         }
         playerController.SpawnPlayer();
     }
@@ -269,7 +288,7 @@ public class Spawner : MonoBehaviour
                     rowIsMoved = true;
                 }
             }
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForEndOfFrame();
         }
         if(row != null) {
             row.GetComponent<Row>().canMove = true;
