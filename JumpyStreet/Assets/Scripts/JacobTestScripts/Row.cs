@@ -7,7 +7,7 @@ public class Row : MonoBehaviour
     public Biome.Type rowType = new Biome.Type();
     public int rowValue;
     [SerializeField] GameObject node;
-    [SerializeField] List<GameObject> nodeArray;
+    [SerializeField] public List<GameObject> nodeArray;
     [SerializeField] int rowWidth;
     public Vector3 targetPos;
     public bool canMove = false;

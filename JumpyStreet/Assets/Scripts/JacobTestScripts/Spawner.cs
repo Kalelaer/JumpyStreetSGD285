@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] int remainingBiome;
 
     [Header("Active Rows")]
-    [SerializeField] List<GameObject> activeRows;//main rows in play
+    public List<GameObject> activeRows;//main rows in play
     
     [Header("Inactive Rows")]
     [SerializeField] int maxForest;
@@ -32,6 +32,7 @@ public class Spawner : MonoBehaviour
 
     [Header("Row Spawn/Move Parameters")]
     [SerializeField] private float rowMoveSpeed;
+    [SerializeField] PlayerController playerController;
 
     private void Start()
     {
@@ -252,6 +253,7 @@ public class Spawner : MonoBehaviour
             zOffset++;
             newRow.GetComponent<Row>().canMove = true;
         }
+        playerController.SpawnPlayer();
     }
 
     private IEnumerator MoveRowTowards(GameObject row) {

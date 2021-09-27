@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public Spawner spawner;
     [SerializeField] GameObject masterSpawner;
     [SerializeField] int backwardsMovementCount = 0;
+    [SerializeField] GameObject playerCharacterPrefab;
     [SerializeField] GameObject playerCharacter;
     // Start is called before the first frame update
     void Start()
@@ -24,8 +25,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SpawnPlayer() {
-
+    public void SpawnPlayer() {
+        Vector3 spawnLocation = new Vector3(spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform.position.x, 1.7f, spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform.position.z);
+        playerCharacter = Instantiate(playerCharacterPrefab, spawnLocation, Quaternion.identity);
+        playerCharacter.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
     }
 
     private void PerformHop() {
@@ -40,5 +43,21 @@ public class PlayerController : MonoBehaviour
     private bool IsPlatform() {
         bool isPlatform = false;
         return isPlatform;
+    }
+
+    private IEnumerator FaceForward() {
+        yield return null;
+    }
+
+    private IEnumerator FaceBackwarcd() {
+        yield return null;
+    }
+
+    private IEnumerator FaceLeft() {
+        yield return null;
+    }
+
+    private IEnumerator FaceRight() {
+        yield return null;
     }
 }
