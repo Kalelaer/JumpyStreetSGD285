@@ -19,13 +19,15 @@ public class Hazard : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3.MoveTowards(this.transform.position, endNode.transform.position, speed);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, endNode.transform.position, speed * Time.deltaTime);
     }
     private void Update()
     {
-        if (this.gameObject.transform.position == endNode.transform.position)
+        Vector3 distance = (this.transform.position - endNode.transform.position);
+
+        if (distance.magnitude <= .5f)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 }

@@ -12,7 +12,7 @@ public class Row : MonoBehaviour
     [SerializeField] GameObject platform;
     [SerializeField] GameObject startingNode;
     [SerializeField] GameObject endNode;
-    [SerializeField] List<GameObject> activePlatforms;
+    [SerializeField] public List<GameObject> activePlatforms;
     [SerializeField] int rowWidth;
     public Vector3 targetPos;
     public bool canMove = false;
@@ -54,6 +54,7 @@ public class Row : MonoBehaviour
                 nodeArray.Add(nodeRight);
                 nodeArray.Add(nodeLeft);
                 hazardStart = Random.Range(0, 2);
+                endNode = null;
                 if(hazardStart == 0)
                 {
                     endNode = nodeArray[1];
@@ -89,19 +90,20 @@ public class Row : MonoBehaviour
         }
 
     }
-    private IEnumerator SendPlatforms()
+    public IEnumerator SendPlatforms()
     {
-        while (true)
+        while (rowValue > 0)
         {
             if (rowType == Biome.Type.water)
             {
                 activePlatforms.Add(Instantiate(platform, startingNode.transform.position, Quaternion.identity));
                 int index = activePlatforms.Count - 1;
+                activePlatforms[index].transform.parent = this.transform;
                 activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, 2f);
             }
             yield return new WaitForSeconds(2f);
         }
-
+        yield return null;
     }
 
 

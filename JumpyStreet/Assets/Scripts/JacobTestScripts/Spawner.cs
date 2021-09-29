@@ -74,6 +74,7 @@ public class Spawner : MonoBehaviour
                     if (row.GetComponent<Row>().rowType == Biome.Type.forest) {
                         if (forestRows.ToArray().Length < maxForest) {
                             forestRows.Add(row);
+                            
                         }
                         else {
                             Destroy(row);
@@ -91,6 +92,9 @@ public class Spawner : MonoBehaviour
                     else if (row.GetComponent<Row>().rowType == Biome.Type.water) {
                         if (riverRows.ToArray().Length < maxRiver) {
                             riverRows.Add(row);
+                            foreach (GameObject platform in row.GetComponent<Row>().activePlatforms) {
+                                Destroy(platform);
+                            }
                         }
                         else {
                             Destroy(row);
@@ -99,6 +103,9 @@ public class Spawner : MonoBehaviour
                     else if (row.GetComponent<Row>().rowType == Biome.Type.road) {
                         if (roadRows.ToArray().Length < maxRoad) {
                             roadRows.Add(row);
+                            foreach (GameObject platform in row.GetComponent<Row>().activePlatforms) {
+                                Destroy(platform);
+                            }
                         }
                         else {
                             Destroy(row);
