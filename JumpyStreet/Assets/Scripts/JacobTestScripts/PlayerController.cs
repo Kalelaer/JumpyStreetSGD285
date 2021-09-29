@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public void SpawnPlayer() {
         Vector3 spawnLocation = new Vector3(spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform.position.x, 1.7f, spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform.position.z);
-        playerCharacter = Instantiate(playerCharacterPrefab, spawnLocation, Quaternion.identity), ;
+        playerCharacter = Instantiate(playerCharacterPrefab, spawnLocation, Quaternion.identity);
         playerCharacter.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
     }
 
