@@ -8,6 +8,11 @@ public class Row : MonoBehaviour
     public int rowValue;
     [SerializeField] GameObject node;
     [SerializeField] public List<GameObject> nodeArray;
+    [SerializeField] int hazardStart; //0 - Left, 1- Right
+    [SerializeField] GameObject platform;
+    [SerializeField] GameObject startingNode;
+    [SerializeField] GameObject endNode;
+    [SerializeField] List<GameObject> activePlatforms;
     [SerializeField] int rowWidth;
     public Vector3 targetPos;
     public bool canMove = false;
@@ -48,6 +53,18 @@ public class Row : MonoBehaviour
                 nodeRight.GetComponent<Node>().targetNode = nodeLeft;
                 nodeArray.Add(nodeRight);
                 nodeArray.Add(nodeLeft);
+                hazardStart = Random.Range(0, 2);
+                if(hazardStart == 0)
+                {
+                    endNode = nodeArray[1];
+                }
+                else
+                {
+                    endNode = nodeArray[0];
+                }
+                startingNode = nodeArray[hazardStart];
+                StartCoroutine(SendPlatforms());
+
             }
             else {
                 for (int i = -width; i <= width; i++) {
@@ -69,6 +86,20 @@ public class Row : MonoBehaviour
         foreach (GameObject node in nodeArray)
         {
             node.transform.parent = this.transform;
+        }
+
+    }
+    private IEnumerator SendPlatforms()
+    {
+        while (true)
+        {
+            if (rowType == Biome.Type.water)
+            {
+                activePlatforms.Add(Instantiate(platform, startingNode.transform.position, Quaternion.identity));
+                int index = activePlatforms.Count - 1;
+                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, 2f);
+            }
+            yield return new WaitForSeconds(2f);
         }
 
     }

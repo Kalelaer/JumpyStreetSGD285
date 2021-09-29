@@ -47,9 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rowType: 3
+  rowValue: 0
   node: {fileID: 3120870944099353051, guid: a476ff21c35d23540a68bb1eb6d5e3d4, type: 3}
   nodeArray: []
+  platform: {fileID: 1493958779012120596, guid: b9de24523a11d714db3851b5f0f9d527, type: 3}
   rowWidth: 0
+  targetPos: {x: 0, y: 0, z: 0}
+  canMove: 0
+  isBack: 0
 --- !u!33 &7114177558558291692
 MeshFilter:
   m_ObjectHideFlags: 0
