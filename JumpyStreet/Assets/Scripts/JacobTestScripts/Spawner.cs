@@ -279,7 +279,7 @@ public class Spawner : MonoBehaviour
             newRow.GetComponent<Row>().canMove = true;
             newRow.GetComponent<Row>().targetPos = new Vector3(newRow.transform.position.x, newRow.transform.position.y, newRow.transform.position.z);
         }
-        playerController.SpawnPlayer();
+        playerController.SpawnPlayerModel();
     }
 
     private IEnumerator MoveRowTowards(GameObject row) {
