@@ -14,6 +14,7 @@ public class Row : MonoBehaviour
     [SerializeField] GameObject endNode;
     [SerializeField] public List<GameObject> activePlatforms;
     [SerializeField] int rowWidth;
+    [SerializeField] List<GameObject> carHazards;
     public Vector3 targetPos;
     public bool canMove = false;
     public bool isBack;
@@ -55,16 +56,23 @@ public class Row : MonoBehaviour
                 nodeArray.Add(nodeLeft);
                 hazardStart = Random.Range(0, 2);
                 endNode = null;
+                string side;
                 if(hazardStart == 0)
                 {
                     endNode = nodeArray[1];
+                    side = "left";
                 }
                 else
                 {
                     endNode = nodeArray[0];
+                    side = "right";
                 }
                 startingNode = nodeArray[hazardStart];
-                StartCoroutine(SendPlatforms());
+                int delay = Random.Range(3,5);
+                int speed = Random.Range(1,4);
+
+
+                StartCoroutine(SendPlatforms(side,delay,speed));
 
             }
             else {
@@ -90,8 +98,16 @@ public class Row : MonoBehaviour
         }
 
     }
-    public IEnumerator SendPlatforms()
+    public IEnumerator SendPlatforms(string side, /*optional*/ float timeDelay = 2f, float speed = 2f)
     {
+        GameObject car = null;
+         if (rowType == Biome.Type.road){
+            int carHazardsLength = carHazards.Count;
+            int selector = Random.Range(0,carHazardsLength);
+            print(selector);
+            Debug.Log("Choosing Car");
+            car = carHazards[selector];
+        }
         while (rowValue > 0)
         {
             if (rowType == Biome.Type.water)
@@ -99,9 +115,32 @@ public class Row : MonoBehaviour
                 activePlatforms.Add(Instantiate(platform, startingNode.transform.position, Quaternion.identity));
                 int index = activePlatforms.Count - 1;
                 activePlatforms[index].transform.parent = this.transform;
-                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, 2f);
+                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed);
             }
-            yield return new WaitForSeconds(2f);
+
+            if (rowType == Biome.Type.road)
+            {
+                Vector3 newRotation = new Vector3(90,0,45);
+                Vector3 newScale = new Vector3(0,0,0);
+                if(side == "left"){
+                    newRotation = new Vector3(-90,180,90);
+                    newScale = new Vector3(0.6f,0.025f,0.66f);
+                    //this.gameObject.transform.rotation = Quaternion.Euler(0,90,90);
+                }
+                else if (side == "right"){
+                    newRotation = new Vector3(90,45,0);
+                    //this.gameObject.transform.rotation = Quaternion.Euler(0,90,-90);
+                }
+                //activePlatforms.Add(Instantiate(car, startingNode.transform.position, Quaternion.Euler(newRotation)));
+                activePlatforms.Add(Instantiate(car, startingNode.transform.position, Quaternion.identity));
+                int index = activePlatforms.Count - 1;
+                activePlatforms[index].transform.parent = this.transform;
+                //activePlatforms[index].transform.rotation = Quaternion.Euler(newRotation);
+                activePlatforms[index].transform.localScale = new Vector3(1.5f,0.75f,0.2f);//resets the scales, 0.03125f
+                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed, side);
+            }
+
+            yield return new WaitForSeconds(timeDelay);
         }
         yield return null;
     }
