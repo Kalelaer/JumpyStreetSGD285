@@ -9,12 +9,13 @@ public class Hazard : MonoBehaviour
     public string startingSide;
     public Vector3 endPos;
     public float offset;
+    [SerializeField] float destroyDistance;
     private void Awake()
     {
-        Debug.Log("New Platform created");
+        //Debug.Log("New Platform created");
     }
 
-    public void SetInfo(GameObject node, float MoveSpeed, string side = "", float Offset = 0)
+    public void SetInfo(GameObject node, float MoveSpeed, string side = "", float Offset = 0, float destroyDis = 0.5f)
     {
         speed = MoveSpeed;
         endNode = node;
@@ -29,9 +30,9 @@ public class Hazard : MonoBehaviour
     }
     private void Update()
     {
-        Vector3 distance = (this.transform.position - endNode.transform.position);
+        Vector3 distance = (this.transform.position - endPos);
 
-        if (distance.magnitude <= .5f)
+        if (distance.magnitude <= destroyDistance)
         {
             Destroy(this.gameObject);
         }

@@ -7,7 +7,7 @@ public class Row : MonoBehaviour
     public Biome.Type rowType = new Biome.Type();
     public int rowValue;
     [SerializeField] GameObject node;
-    [SerializeField] public List<GameObject> nodeArray;
+    public List<GameObject> nodeArray;
     [SerializeField] int hazardStart; //0 - Left, 1- Right
     [SerializeField] GameObject platform;
     [SerializeField] GameObject startingNode;
@@ -116,8 +116,41 @@ public class Row : MonoBehaviour
         {
             if (rowType == Biome.Type.water)
             {
+                Vector3 newRotation = new Vector3(60,0,0);
+                int randomRot = Random.Range(1,9);
+                switch (randomRot)
+                {
+                    case 1:
+                        newRotation = new Vector3(-60,0,0);
+                        break;
+                    case 2:
+                        newRotation = new Vector3(60,0,0);
+                        break;
+                    case 3:
+                        newRotation = new Vector3(-60,180,0);
+                        break;
+                    case 4:
+                        newRotation = new Vector3(60,180,0);
+                        break;
+                    case 5:
+                        newRotation = new Vector3(-45,0,0);
+                        break;
+                    case 6:
+                        newRotation = new Vector3(45,0,0);
+                        break;
+                    case 7:
+                        newRotation = new Vector3(45,180,0);
+                        break;
+                    case 8:
+                        newRotation = new Vector3(-45,180,0);
+                        break;
+                    default:
+                        break;
+                }
+
                 activePlatforms.Add(Instantiate(platform, startingNode.transform.position, Quaternion.identity));
                 int index = activePlatforms.Count - 1;
+                activePlatforms[index].transform.rotation = Quaternion.Euler(newRotation);
                 activePlatforms[index].transform.parent = this.transform;
                 activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed);
             }
@@ -137,7 +170,7 @@ public class Row : MonoBehaviour
                 int index = activePlatforms.Count - 1;
                 activePlatforms[index].transform.rotation = Quaternion.Euler(newRotation);
                 activePlatforms[index].transform.parent = this.transform;
-                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed, side, carOffset);
+                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed, side, carOffset, 2f);
             }
 
             yield return new WaitForSeconds(timeDelay);
