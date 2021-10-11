@@ -14,7 +14,7 @@ public class Row : MonoBehaviour
     [SerializeField] GameObject endNode;
     [SerializeField] public List<GameObject> activePlatforms;
     [SerializeField] int rowWidth;
-    [SerializeField] List<GameObject> carHazards;
+    [SerializeField] List<Group> carHazards;
     public Vector3 targetPos;
     public bool canMove = false;
     public bool isBack;
@@ -101,12 +101,16 @@ public class Row : MonoBehaviour
     public IEnumerator SendPlatforms(string side, /*optional*/ float timeDelay = 2f, float speed = 2f)
     {
         GameObject car = null;
+        float carOffset = 0;
          if (rowType == Biome.Type.road){
             int carHazardsLength = carHazards.Count;
             int selector = Random.Range(0,carHazardsLength);
             print(selector);
             Debug.Log("Choosing Car");
-            car = carHazards[selector];
+            car = carHazards[selector].Object;
+            carOffset = carHazards[selector].Offset;
+            timeDelay+=1;
+            speed+=1;
         }
         while (rowValue > 0)
         {
@@ -124,20 +128,16 @@ public class Row : MonoBehaviour
                 Vector3 newScale = new Vector3(0,0,0);
                 if(side == "left"){
                     newRotation = new Vector3(-90,180,90);
-                    newScale = new Vector3(0.6f,0.025f,0.66f);
-                    //this.gameObject.transform.rotation = Quaternion.Euler(0,90,90);
                 }
                 else if (side == "right"){
-                    newRotation = new Vector3(90,45,0);
-                    //this.gameObject.transform.rotation = Quaternion.Euler(0,90,-90);
+                    newRotation = new Vector3(-90,180,-90);
                 }
-                //activePlatforms.Add(Instantiate(car, startingNode.transform.position, Quaternion.Euler(newRotation)));
-                activePlatforms.Add(Instantiate(car, startingNode.transform.position, Quaternion.identity));
+                Vector3 startPos = new Vector3(startingNode.transform.position.x,startingNode.transform.position.y+.5f, startingNode.transform.position.z);
+                activePlatforms.Add(Instantiate(car, startPos, Quaternion.identity));
                 int index = activePlatforms.Count - 1;
+                activePlatforms[index].transform.rotation = Quaternion.Euler(newRotation);
                 activePlatforms[index].transform.parent = this.transform;
-                //activePlatforms[index].transform.rotation = Quaternion.Euler(newRotation);
-                activePlatforms[index].transform.localScale = new Vector3(1.5f,0.75f,0.2f);//resets the scales, 0.03125f
-                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed, side);
+                activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed, side, carOffset);
             }
 
             yield return new WaitForSeconds(timeDelay);

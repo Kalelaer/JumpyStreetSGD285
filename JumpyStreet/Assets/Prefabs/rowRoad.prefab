@@ -57,7 +57,11 @@ MonoBehaviour:
   activePlatforms: []
   rowWidth: 0
   carHazards:
-  - {fileID: 1386668584974742890, guid: 48910aab94b0c4b47b55c993a3b7cba0, type: 3}
+  - _biomeType: 1
+    _tileType: 
+    _offset: 0.6
+    _rotationOffset: 0
+    _object: {fileID: 1386668584974742890, guid: 48910aab94b0c4b47b55c993a3b7cba0, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   canMove: 0
   isBack: 0
