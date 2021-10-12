@@ -145,7 +145,6 @@ public class PlayerController : MonoBehaviour
     private IEnumerator MoveTowardsPosition(Vector3 newPos) {
         bool traveling = true;
         while (traveling) {
-            Debug.Log("Action Called");
             transform.position = Vector3.MoveTowards(transform.position, newPos, 8 * Time.deltaTime);
             if(Vector3.Distance(transform.position, newPos) < .1) {
                 traveling = false;

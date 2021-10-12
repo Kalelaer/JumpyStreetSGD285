@@ -3947,6 +3947,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 902464796}
     - target: {fileID: 7864830299599364269, guid: 1f17404c393b3e84b9e4733da6fdcc3f, type: 3}
+      propertyPath: currentRow
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864830299599364269, guid: 1f17404c393b3e84b9e4733da6fdcc3f, type: 3}
+      propertyPath: currentNode
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864830299599364269, guid: 1f17404c393b3e84b9e4733da6fdcc3f, type: 3}
       propertyPath: masterSpawner
       value: 
       objectReference: {fileID: 902464792}
