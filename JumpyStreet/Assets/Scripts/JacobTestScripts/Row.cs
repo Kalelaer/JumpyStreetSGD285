@@ -105,8 +105,8 @@ public class Row : MonoBehaviour
          if (rowType == Biome.Type.road){
             int carHazardsLength = carHazards.Count;
             int selector = Random.Range(0,carHazardsLength);
-            print(selector);
-            Debug.Log("Choosing Car");
+            //print(selector);
+            //Debug.Log("Choosing Car");
             car = carHazards[selector].Object;
             carOffset = carHazards[selector].Offset;
             timeDelay+=1;

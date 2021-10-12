@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8587984876965203966}
   - component: {fileID: 3648455890002969223}
   - component: {fileID: 1744584020540399731}
+  - component: {fileID: 2078385388730250959}
   m_Layer: 0
   m_Name: node
   m_TagString: Node
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3120870944099353051}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5245196990474107563}
@@ -132,6 +133,19 @@ MonoBehaviour:
   nodeBiome: 0
   isWall: 0
   child: {fileID: 0}
+--- !u!65 &2078385388730250959
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3120870944099353051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2974365246897588703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146,6 +160,10 @@ PrefabInstance:
     - target: {fileID: 4873181680327141953, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
       propertyPath: m_Name
       value: VisualNode
+      objectReference: {fileID: 0}
+    - target: {fileID: 4873181680327141953, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4873181680327141953, guid: b6a9baa093714fa4498faf71c096e01b, type: 3}
       propertyPath: m_IsActive

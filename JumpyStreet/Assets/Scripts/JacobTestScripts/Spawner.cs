@@ -62,7 +62,7 @@ public class Spawner : MonoBehaviour
             if(row.GetComponent<Row>().rowValue <= 0){
                 int nodeCount = row.GetComponent<Row>().nodeArray.Count;
                 foreach(GameObject node in row.GetComponent<Row>().nodeArray) {
-                    Debug.Log("Destroyin all the children");
+                    //Debug.Log("Destroyin all the children");
                     node.GetComponent<Node>().percentToSpawn = 0;
                     Destroy(node.GetComponent<Node>().child);
                 }
@@ -137,17 +137,17 @@ public class Spawner : MonoBehaviour
             if(!tryAgain){//try once
                 tryAgain = true;
                 ChooseBiome();
-                print("Trying again");
+                //print("Trying again");
             }
             else{//if it happens again then dont try again
                 tryAgain = false;
-                print("failed to try again. moving on with the same biome");
+                //print("failed to try again. moving on with the same biome");
             }
         }
         else{
             tryAgain = false;
         }
-        print($" current biome {currentBiome}, Biome Length {remainingBiome}");
+        //print($" current biome {currentBiome}, Biome Length {remainingBiome}");
     }
     public void SpawnRow( int rowVal, /*optional*/ float offsetOverride = 1f){
         //increment player score here
@@ -243,29 +243,31 @@ public class Spawner : MonoBehaviour
 
 
     private void SpawnInitial(){
+        
+        CreateStartingZone();
         int rowValue = 11;
-        for(int i=19;i>0;i--){
-            SpawnRow(rowValue,i);
+        for (int i = 19; i > 0; i--) {
+            SpawnRow(rowValue, i);
             rowValue++;
         }
-        CreateStartingZone();
+
+        playerController.SpawnPlayerModel();
     }
 
     //Use this to grab a prefab of the starting zone
     private void CreateStartingZone(){
         masterSpawner = this.gameObject;
-        float zOffset = 20f;
+        float zOffset = 29f;
         //Spawn Starting zone
-        int rowVal = 10;
+        int rowVal = 1;
         for(int i = 0; i < 10; i++){
             //Spawns the rows    
             Vector3 rowSpawn = new Vector3(masterSpawner.transform.position.x, masterSpawner.transform.position.y - 0.25f, masterSpawner.transform.position.z - zOffset);
             GameObject newRow = Instantiate(mainRowsObjects[0], rowSpawn, Quaternion.identity);
             newRow.GetComponent<Row>().rowValue = rowVal;
             activeRows.Add(newRow);
-
-
-            if (i > 6)
+            
+            if (i < 5)
             {//spawn back wall
                 newRow.GetComponent<Row>().SpawnNode(rowWidth, false, rowVal, true);
                 newRow.GetComponent<Row>().isBack = true;
@@ -274,12 +276,11 @@ public class Spawner : MonoBehaviour
             {
                 newRow.GetComponent<Row>().SpawnNode(rowWidth, false, rowVal, false);
             }
-            rowVal--;
-            zOffset++;
+            rowVal++;
+            zOffset--;
             newRow.GetComponent<Row>().canMove = true;
             newRow.GetComponent<Row>().targetPos = new Vector3(newRow.transform.position.x, newRow.transform.position.y, newRow.transform.position.z);
         }
-        playerController.SpawnPlayerModel();
     }
 
     private IEnumerator MoveRowTowards(GameObject row) {

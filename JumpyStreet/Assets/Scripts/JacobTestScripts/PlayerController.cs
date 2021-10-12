@@ -13,6 +13,11 @@ public class PlayerController : MonoBehaviour
     private GameObject playerCharacterModel;
     [SerializeField] float moveDelay;
     private float timeSinceMove;
+    private GameObject newPlatform;
+    private GameObject newNode;
+    private string raycastReturn;
+    [SerializeField] int currentRow;
+    [SerializeField] int currentNode;
     
 
     // Start is called before the first frame update
@@ -28,16 +33,61 @@ public class PlayerController : MonoBehaviour
         if(timeSinceMove > moveDelay) {
             if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow)) {
                 StartCoroutine(PerformHop());
-                MoveForward();
+                if(spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.desert) {
+                    if(spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
+                        MoveForward();
+                    }
+                }
+                else {
+                    MoveForward();
+                }
+                timeSinceMove = 0;
+            }
+            if(Input.GetKeyDown("a") || Input.GetKeyDown(KeyCode.LeftArrow)) {
+                StartCoroutine(PerformHop());
+                if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
+                    
+                    if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode - 1].GetComponent<Node>().child == null) {
+                        MoveLeft();
+                    }
+                }
+                else {
+                    MoveLeft();
+                }
+                timeSinceMove = 0;
+            }
+            if (Input.GetKeyDown("d") || Input.GetKeyDown(KeyCode.RightArrow)) {
+                StartCoroutine(PerformHop());
+                if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
+
+                    if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode + 1].GetComponent<Node>().child == null) {
+                        MoveRight();
+                    }
+                }
+                else {
+                    MoveRight();
+                }
+                timeSinceMove = 0;
+            }
+            if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow)) {
+                StartCoroutine(PerformHop());
+                if (spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.desert) {
+                    if (spawner.activeRows[currentRow - 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
+                        MoveBackwards();
+                    }
+                }
+                else {
+                    MoveBackwards();
+                }
                 timeSinceMove = 0;
             }
         }
+
         
     }
 
     public void SpawnPlayerModel() {
-        this.transform.SetParent(spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform);
-        this.transform.position = new Vector3(spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform.position.x, spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform.position.y + modelYOffest, spawner.activeRows[21].GetComponent<Row>().nodeArray[15].transform.position.z);
+        this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
 
         playerCharacterModel = Instantiate(playerCharacterPrefab, this.transform.position, Quaternion.identity, this.transform);
         playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
@@ -52,17 +102,73 @@ public class PlayerController : MonoBehaviour
     }
 
     private void MoveForward() {
+        Vector3 forwardPosition;
         if (backwardsMovementCount == 0) {
             spawner.MoveRows();
+            forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         }
+        else {
+            forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1);
+            backwardsMovementCount--;
+            currentRow++;
+        }
+        
+        this.transform.position = forwardPosition;
     }
 
-    private bool IsNode(Transform castPoint) {
+    private void MoveLeft() {
+        
+        Vector3 leftPosition = new Vector3(this.transform.position.x - 1, this.transform.position.y, this.transform.position.z);
+        currentNode--;
+        StartCoroutine(MoveTowardsPosition(leftPosition));
+    }
+
+    private void MoveRight() {
+        Vector3 rightPosition = new Vector3(this.transform.position.x + 1, this.transform.position.y, this.transform.position.z);
+        currentNode++;
+        StartCoroutine(MoveTowardsPosition(rightPosition));
+    }
+
+    private void MoveBackwards() {
+        Vector3 backwardPosition;
+        if (backwardsMovementCount < 3) {
+            backwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 1);
+            backwardsMovementCount++;
+            currentRow--;
+            StartCoroutine(MoveTowardsPosition(backwardPosition));
+        }
+        else {
+            //death??
+        }
+    }
+    
+    private IEnumerator MoveTowardsPosition(Vector3 newPos) {
+        bool traveling = true;
+        while (traveling) {
+            Debug.Log("Action Called");
+            transform.position = Vector3.MoveTowards(transform.position, newPos, 8 * Time.deltaTime);
+            if(Vector3.Distance(transform.position, newPos) < .1) {
+                traveling = false;
+                transform.position = newPos;
+                
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        if(spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
+            this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
+        }
+        yield return null;
+    }
+
+    private bool IsNode(Vector3 castPoint) {
         bool isGround = false;
+        //RaycastHit hit;
+        Ray ray = new Ray(castPoint, -transform.up);
+        
         return isGround;
     }
 
-    private bool IsPlatform(Transform castPoint) {
+    private bool IsPlatform(Vector3 castPoint) {
         bool isPlatform = false;
         return isPlatform;
     }

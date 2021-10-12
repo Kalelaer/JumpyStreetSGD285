@@ -1676,9 +1676,11 @@ MonoBehaviour:
   masterSpawner: {fileID: 902464792}
   backwardsMovementCount: 0
   playerCharacterPrefab: {fileID: 8586039007400793021, guid: 4dac9c0ec14df7842953ebabf14db555, type: 3}
-  modelYOffest: 2
+  modelYOffest: 0.45
   playerModel: {fileID: 534757145}
   moveDelay: 0.25
+  currentRow: 6
+  currentNode: 15
 --- !u!4 &886221559
 Transform:
   m_ObjectHideFlags: 0

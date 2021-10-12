@@ -11,7 +11,7 @@ public class Hazard : MonoBehaviour
     public float offset;
     private void Awake()
     {
-        Debug.Log("New Platform created");
+        //Debug.Log("New Platform created");
     }
 
     public void SetInfo(GameObject node, float MoveSpeed, string side = "", float Offset = 0)
