@@ -35,100 +35,13 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow)) {
                 StartCoroutine(PerformHop());
                 if(spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.desert) {
+                    if (onPlatform) {
+                        SetCurrentNodeFromX(); ;
+                    }
                     if(spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
                         if (onPlatform) {
                             this.transform.parent = null;
                             onPlatform = false;
-                            int roundedX = Mathf.RoundToInt(this.transform.position.x);
-                            switch (roundedX) {
-                                case -14:
-                                    currentNode = 1;
-                                    break;
-                                case -13:
-                                    currentNode = 2;
-                                    break;
-                                case -12:
-                                    currentNode = 3;
-                                    break;
-                                case -11:
-                                    currentNode = 4;
-                                    break;
-                                case -10:
-                                    currentNode = 5;
-                                    break;
-                                case -9:
-                                    currentNode = 6;
-                                    break;
-                                case -8:
-                                    currentNode = 7;
-                                    break;
-                                case -7:
-                                    currentNode = 8;
-                                    break;
-                                case -6:
-                                    currentNode = 9;
-                                    break;
-                                case -5:
-                                    currentNode = 10;
-                                    break;
-                                case -4:
-                                    currentNode = 11;
-                                    break;
-                                case -3:
-                                    currentNode = 12;
-                                    break;
-                                case -2:
-                                    currentNode = 13;
-                                    break;
-                                case -1:
-                                    currentNode = 14;
-                                    break;
-                                case 0:
-                                    currentNode = 15;
-                                    break;
-                                case 1:
-                                    currentNode = 16;
-                                    break;
-                                case 2:
-                                    currentNode = 17;
-                                    break;
-                                case 3:
-                                    currentNode = 18;
-                                    break;
-                                case 4:
-                                    currentNode = 19;
-                                    break;
-                                case 5:
-                                    currentNode = 20;
-                                    break;
-                                case 6:
-                                    currentNode = 21;
-                                    break;
-                                case 7:
-                                    currentNode = 22;
-                                    break;
-                                case 8:
-                                    currentNode = 23;
-                                    break;
-                                case 9:
-                                    currentNode = 24;
-                                    break;
-                                case 10:
-                                    currentNode = 25;
-                                    break;
-                                case 11:
-                                    currentNode = 26;
-                                    break;
-                                case 12:
-                                    currentNode = 27;
-                                    break;
-                                case 13:
-                                    currentNode = 28;
-                                    break;
-                                case 14:
-                                    currentNode = 29;
-                                    break;
-                            }
                         }
                         MoveForward();
                         
@@ -144,6 +57,11 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 else {
+                    if (onPlatform) {
+                        this.transform.parent = null;
+                        onPlatform = false;
+                        SetCurrentNodeFromX();
+                    }
                     MoveForward();
                 }
                 timeSinceMove = 0;
@@ -151,9 +69,21 @@ public class PlayerController : MonoBehaviour
             if(Input.GetKeyDown("a") || Input.GetKeyDown(KeyCode.LeftArrow)) {
                 StartCoroutine(PerformHop());
                 if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
-                    
+
                     if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode - 1].GetComponent<Node>().child == null) {
                         MoveLeft();
+                    }
+                }
+                else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water) {
+                    if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 1))) {
+                        onPlatform = true;
+                        if (newPlatform.transform != this.transform.parent) {
+                            transform.SetParent(newPlatform.transform);
+                        }
+                        MoveLeft();
+                    }
+                    else {
+                        //fall and die?
                     }
                 }
                 else {
@@ -169,6 +99,18 @@ public class PlayerController : MonoBehaviour
                         MoveRight();
                     }
                 }
+                else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water) {
+                    if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1))) {
+                        onPlatform = true;
+                        if (newPlatform.transform != this.transform.parent) {
+                            transform.SetParent(newPlatform.transform);
+                        }
+                        MoveRight();
+                    }
+                    else {
+                        //fall and die?
+                    }
+                }
                 else {
                     MoveRight();
                 }
@@ -177,11 +119,34 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow)) {
                 StartCoroutine(PerformHop());
                 if (spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.desert) {
+                    if (onPlatform) {
+                        SetCurrentNodeFromX(); ;
+                    }
                     if (spawner.activeRows[currentRow - 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
+                        if (onPlatform) {
+                            this.transform.parent = null;
+                            onPlatform = false;
+                            SetCurrentNodeFromX();
+                        }
                         MoveBackwards();
                     }
                 }
+                else if (spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.water) {
+                    if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 1))) {
+                        onPlatform = true;
+                        transform.SetParent(newPlatform.transform);
+                        MoveBackwards();
+                    }
+                    else {
+                        //fall and die?
+                    }
+                }
                 else {
+                    if (onPlatform) {
+                        this.transform.parent = null;
+                        onPlatform = false;
+                        SetCurrentNodeFromX();
+                    }
                     MoveBackwards();
                 }
                 timeSinceMove = 0;
@@ -220,12 +185,9 @@ public class PlayerController : MonoBehaviour
             backwardsMovementCount--;
             currentRow++;
         }
-        if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
-            this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
-        }
-
         this.transform.position = forwardPosition;
-        
+        Invoke("MoveToCurrentPosition", 0.1f);
+
     }
 
     private void MoveLeft() {
@@ -265,9 +227,7 @@ public class PlayerController : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
-        if(spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
-            this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
-        }
+        MoveToCurrentPosition();
         yield return null;
     }
 
@@ -310,5 +270,107 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator FaceRight() {
         yield return null;
+    }
+
+    private void SetCurrentNodeFromX() {
+        int roundedX = Mathf.RoundToInt(this.transform.position.x);
+        switch (roundedX) {
+            case -14:
+                currentNode = 1;
+                break;
+            case -13:
+                currentNode = 2;
+                break;
+            case -12:
+                currentNode = 3;
+                break;
+            case -11:
+                currentNode = 4;
+                break;
+            case -10:
+                currentNode = 5;
+                break;
+            case -9:
+                currentNode = 6;
+                break;
+            case -8:
+                currentNode = 7;
+                break;
+            case -7:
+                currentNode = 8;
+                break;
+            case -6:
+                currentNode = 9;
+                break;
+            case -5:
+                currentNode = 10;
+                break;
+            case -4:
+                currentNode = 11;
+                break;
+            case -3:
+                currentNode = 12;
+                break;
+            case -2:
+                currentNode = 13;
+                break;
+            case -1:
+                currentNode = 14;
+                break;
+            case 0:
+                currentNode = 15;
+                break;
+            case 1:
+                currentNode = 16;
+                break;
+            case 2:
+                currentNode = 17;
+                break;
+            case 3:
+                currentNode = 18;
+                break;
+            case 4:
+                currentNode = 19;
+                break;
+            case 5:
+                currentNode = 20;
+                break;
+            case 6:
+                currentNode = 21;
+                break;
+            case 7:
+                currentNode = 22;
+                break;
+            case 8:
+                currentNode = 23;
+                break;
+            case 9:
+                currentNode = 24;
+                break;
+            case 10:
+                currentNode = 25;
+                break;
+            case 11:
+                currentNode = 26;
+                break;
+            case 12:
+                currentNode = 27;
+                break;
+            case 13:
+                currentNode = 28;
+                break;
+            case 14:
+                currentNode = 29;
+                break;
+        }
+    }
+
+    private void MoveToCurrentPosition() {
+        if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
+            this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
+        }
+        else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water && onPlatform) {
+            this.transform.position = new Vector3(transform.position.x, transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().transform.position.z);
+        }
     }
 }
