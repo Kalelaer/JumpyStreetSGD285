@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private string raycastReturn;
     [SerializeField] int currentRow;
     [SerializeField] int currentNode;
+    private bool onPlatform;
     
 
     // Start is called before the first frame update
@@ -35,7 +36,111 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PerformHop());
                 if(spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.desert) {
                     if(spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
+                        if (onPlatform) {
+                            this.transform.parent = null;
+                            onPlatform = false;
+                            int roundedX = Mathf.RoundToInt(this.transform.position.x);
+                            switch (roundedX) {
+                                case -14:
+                                    currentNode = 1;
+                                    break;
+                                case -13:
+                                    currentNode = 2;
+                                    break;
+                                case -12:
+                                    currentNode = 3;
+                                    break;
+                                case -11:
+                                    currentNode = 4;
+                                    break;
+                                case -10:
+                                    currentNode = 5;
+                                    break;
+                                case -9:
+                                    currentNode = 6;
+                                    break;
+                                case -8:
+                                    currentNode = 7;
+                                    break;
+                                case -7:
+                                    currentNode = 8;
+                                    break;
+                                case -6:
+                                    currentNode = 9;
+                                    break;
+                                case -5:
+                                    currentNode = 10;
+                                    break;
+                                case -4:
+                                    currentNode = 11;
+                                    break;
+                                case -3:
+                                    currentNode = 12;
+                                    break;
+                                case -2:
+                                    currentNode = 13;
+                                    break;
+                                case -1:
+                                    currentNode = 14;
+                                    break;
+                                case 0:
+                                    currentNode = 15;
+                                    break;
+                                case 1:
+                                    currentNode = 16;
+                                    break;
+                                case 2:
+                                    currentNode = 17;
+                                    break;
+                                case 3:
+                                    currentNode = 18;
+                                    break;
+                                case 4:
+                                    currentNode = 19;
+                                    break;
+                                case 5:
+                                    currentNode = 20;
+                                    break;
+                                case 6:
+                                    currentNode = 21;
+                                    break;
+                                case 7:
+                                    currentNode = 22;
+                                    break;
+                                case 8:
+                                    currentNode = 23;
+                                    break;
+                                case 9:
+                                    currentNode = 24;
+                                    break;
+                                case 10:
+                                    currentNode = 25;
+                                    break;
+                                case 11:
+                                    currentNode = 26;
+                                    break;
+                                case 12:
+                                    currentNode = 27;
+                                    break;
+                                case 13:
+                                    currentNode = 28;
+                                    break;
+                                case 14:
+                                    currentNode = 29;
+                                    break;
+                            }
+                        }
                         MoveForward();
+                        
+                    }
+                }else if (spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.water) {
+                    if(IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1))) {
+                        onPlatform = true;
+                        transform.SetParent(newPlatform.transform);
+                        MoveForward();
+                    }
+                    else {
+                        //fall and die?
                     }
                 }
                 else {
@@ -104,16 +209,23 @@ public class PlayerController : MonoBehaviour
     private void MoveForward() {
         Vector3 forwardPosition;
         if (backwardsMovementCount == 0) {
-            spawner.MoveRows();
             forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+            if (onPlatform) {
+                forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1);
+            }
+            spawner.MoveRows();
         }
         else {
             forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1);
             backwardsMovementCount--;
             currentRow++;
         }
-        
+        if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
+            this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
+        }
+
         this.transform.position = forwardPosition;
+        
     }
 
     private void MoveLeft() {
@@ -169,6 +281,14 @@ public class PlayerController : MonoBehaviour
 
     private bool IsPlatform(Vector3 castPoint) {
         bool isPlatform = false;
+        RaycastHit hit;
+        Ray ray = new Ray(castPoint, -transform.up);
+        if(Physics.Raycast(ray, out hit, 3f)) {
+            if (hit.collider.gameObject.CompareTag("platform")) {
+                isPlatform = true;
+                newPlatform = hit.collider.gameObject;
+            }
+        }
         return isPlatform;
     }
 
