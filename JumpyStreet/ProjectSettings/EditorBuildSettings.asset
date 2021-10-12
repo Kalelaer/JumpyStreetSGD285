@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/JacobTesting.unity
+    guid: f83b3dae78406b84997649f9d69c5589
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 3eac23ef70c45f64490960acc494d6bb
   - enabled: 1

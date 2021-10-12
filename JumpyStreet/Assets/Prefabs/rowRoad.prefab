@@ -59,9 +59,29 @@ MonoBehaviour:
   carHazards:
   - _biomeType: 1
     _tileType: 
-    _offset: 0.6
+    _offset: 0.4
+    _rotationOffset: 0
+    _object: {fileID: 7380087125058422689, guid: 022133fe77513bc4eb6157b9c2be7e54, type: 3}
+  - _biomeType: 1
+    _tileType: 
+    _offset: 0.4
     _rotationOffset: 0
     _object: {fileID: 1386668584974742890, guid: 48910aab94b0c4b47b55c993a3b7cba0, type: 3}
+  - _biomeType: 1
+    _tileType: 
+    _offset: 0.4
+    _rotationOffset: 0
+    _object: {fileID: 5436628923180341923, guid: 31e3c9c000fe61e4ab6c6006f7ff21f4, type: 3}
+  - _biomeType: 1
+    _tileType: 
+    _offset: 0.2
+    _rotationOffset: 0
+    _object: {fileID: 7272268553944531412, guid: 55773727174cfb74f85f87f59840ce65, type: 3}
+  - _biomeType: 1
+    _tileType: 
+    _offset: 0.4
+    _rotationOffset: 0
+    _object: {fileID: 7496055634219956932, guid: 3b94bb7fc0bb37f4ebffa3e64e1d072a, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   canMove: 0
   isBack: 0
