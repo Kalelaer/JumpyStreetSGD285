@@ -1,10 +1,19 @@
+//////////////////////////////////////////////
+//Assignment/Lab/Project: Jumpy Street
+//Name: Brennan Sullivan & Jacob Coleman
+//Section: 2021FA.SGD.285.2141
+//Instructor: Aurore Wold
+//Date: 9/13/2021
+/////////////////////////////////////////////
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public Spawner spawner;
+    [SerializeField] GameObject menuController;
     [SerializeField] GameObject masterSpawner;
     [SerializeField] int backwardsMovementCount = 0;
     [SerializeField] GameObject playerCharacterPrefab;
@@ -54,6 +63,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else {
                         //fall and die?
+                        Death();
                     }
                 }
                 else {
@@ -84,6 +94,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else {
                         //fall and die?
+                        Death();
                     }
                 }
                 else {
@@ -109,6 +120,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else {
                         //fall and die?
+                        Death();
                     }
                 }
                 else {
@@ -139,6 +151,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else {
                         //fall and die?
+                        Death();
                     }
                 }
                 else {
@@ -157,9 +170,34 @@ public class PlayerController : MonoBehaviour
     }
 
     public void SpawnPlayerModel() {
+        if(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
+        {
+
+        }
+        else if (spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
+        {
+            currentRow++;
+        }
+        else if(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode - 1].GetComponent<Node>().child == null)
+        {
+            currentNode--;
+        }
+        else if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode + 1].GetComponent<Node>().child == null)
+        {
+            currentNode++;
+        }
+        else if (spawner.activeRows[currentRow - 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
+        {
+            currentRow--;
+        }
+        else
+        {
+
+        }
+
         this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
 
-        playerCharacterModel = Instantiate(playerCharacterPrefab, this.transform.position, Quaternion.identity, this.transform);
+        playerCharacterModel = Instantiate(playerCharacterPrefab, this.transform.position, Quaternion.identity, playerModel.transform);
         playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
     }
 
@@ -173,12 +211,14 @@ public class PlayerController : MonoBehaviour
 
     private void MoveForward() {
         Vector3 forwardPosition;
+        StartCoroutine(FaceForward());
         if (backwardsMovementCount == 0) {
             forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
             if (onPlatform) {
                 forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1);
             }
             spawner.MoveRows();
+            menuController.GetComponent<GameMenuController>().playerScore++;
         }
         else {
             forwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1);
@@ -194,12 +234,14 @@ public class PlayerController : MonoBehaviour
         
         Vector3 leftPosition = new Vector3(this.transform.position.x - 1, this.transform.position.y, this.transform.position.z);
         currentNode--;
+        StartCoroutine(FaceLeft());
         StartCoroutine(MoveTowardsPosition(leftPosition));
     }
 
     private void MoveRight() {
         Vector3 rightPosition = new Vector3(this.transform.position.x + 1, this.transform.position.y, this.transform.position.z);
         currentNode++;
+        StartCoroutine(FaceRight());
         StartCoroutine(MoveTowardsPosition(rightPosition));
     }
 
@@ -209,10 +251,12 @@ public class PlayerController : MonoBehaviour
             backwardPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 1);
             backwardsMovementCount++;
             currentRow--;
+            StartCoroutine(FaceBackward());
             StartCoroutine(MoveTowardsPosition(backwardPosition));
         }
         else {
             //death??
+            Death();
         }
     }
     
@@ -233,9 +277,16 @@ public class PlayerController : MonoBehaviour
 
     private bool IsNode(Vector3 castPoint) {
         bool isGround = false;
-        //RaycastHit hit;
+        RaycastHit hit;
         Ray ray = new Ray(castPoint, -transform.up);
-        
+        if (Physics.Raycast(ray, out hit, 3f))
+        {
+            if (hit.collider.gameObject.CompareTag("node"))
+            {
+                isGround = true;
+                newNode = hit.collider.gameObject;
+            }
+        }
         return isGround;
     }
 
@@ -253,22 +304,41 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator FaceForward() {
-        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 0f, 0f)) {
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 0f, playerCharacterModel.transform.rotation.z)) {
             playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
             yield return new WaitForFixedUpdate();
         }
+        Debug.Log("FaceForward");
         yield return null;
     }
 
-    private IEnumerator FaceBackwarcd() {
+    private IEnumerator FaceBackward() {
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 180f, playerCharacterModel.transform.rotation.z))
+        {
+            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
+            yield return new WaitForFixedUpdate();
+        }
+        Debug.Log("FaceBackwards");
         yield return null;
     }
 
     private IEnumerator FaceLeft() {
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 270f, playerCharacterModel.transform.rotation.z))
+        {
+            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
+            yield return new WaitForFixedUpdate();
+        }
+        Debug.Log("FaceLeft");
         yield return null;
     }
 
     private IEnumerator FaceRight() {
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 90f, playerCharacterModel.transform.rotation.z))
+        {
+            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
+            yield return new WaitForFixedUpdate();
+        }
+        Debug.Log("FaceRight");
         yield return null;
     }
 
@@ -372,5 +442,10 @@ public class PlayerController : MonoBehaviour
         else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water && onPlatform) {
             this.transform.position = new Vector3(transform.position.x, transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().transform.position.z);
         }
+    }
+
+    private void Death()
+    {
+        SceneManager.LoadScene("MainGame");
     }
 }
