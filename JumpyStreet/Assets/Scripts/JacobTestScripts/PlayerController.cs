@@ -85,10 +85,14 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water) {
-                    if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 1))) {
+                    if (IsPlatform(new Vector3(this.transform.position.x -1, this.transform.position.y, this.transform.position.z))) {
                         onPlatform = true;
                         if (newPlatform.transform != this.transform.parent) {
                             transform.SetParent(newPlatform.transform);
+                        }
+                        else
+                        {
+                            Debug.Log("Moving on current platform.");
                         }
                         MoveLeft();
                     }
@@ -111,10 +115,14 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water) {
-                    if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1))) {
+                    if (IsPlatform(new Vector3(this.transform.position.x + 1, this.transform.position.y, this.transform.position.z))) {
                         onPlatform = true;
                         if (newPlatform.transform != this.transform.parent) {
                             transform.SetParent(newPlatform.transform);
+                        }
+                        else
+                        {
+                            Debug.Log("Moving on current platform.");
                         }
                         MoveRight();
                     }
@@ -202,11 +210,14 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator PerformHop() { // probably just needs to be an animation
+        /*
         Animator anim = playerModel.GetComponent<Animator>();
         anim.SetBool("isHopping", true);
         yield return new WaitForSeconds(moveDelay);
         anim.SetBool("isHopping", false);
+                */
         yield return null;
+
     }
 
     private void MoveForward() {
@@ -294,7 +305,7 @@ public class PlayerController : MonoBehaviour
         bool isPlatform = false;
         RaycastHit hit;
         Ray ray = new Ray(castPoint, -transform.up);
-        if(Physics.Raycast(ray, out hit, 3f)) {
+        if(Physics.Raycast(ray, out hit, 8f)) {
             if (hit.collider.gameObject.CompareTag("platform")) {
                 isPlatform = true;
                 newPlatform = hit.collider.gameObject;
@@ -447,5 +458,10 @@ public class PlayerController : MonoBehaviour
     private void Death()
     {
         SceneManager.LoadScene("MainGame");
+    }
+
+    private void OnDestroy()
+    {
+        Death();
     }
 }

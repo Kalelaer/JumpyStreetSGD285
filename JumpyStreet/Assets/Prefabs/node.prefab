@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8587984876965203966}
-  - component: {fileID: 3648455890002969223}
   - component: {fileID: 1744584020540399731}
   - component: {fileID: 2078385388730250959}
   m_Layer: 0
@@ -34,55 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3648455890002969223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3120870944099353051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc090949797046f4b98d3d18c35b0c44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnables:
-  - _biomeType: 0
-    _tileType: empty
-    _offset: 0
-    _rotationOffset: 0
-    _object: {fileID: 7157439795505718375, guid: 7068363e191474b4b8436b54fff262f2, type: 3}
-  - _biomeType: 0
-    _tileType: safe
-    _offset: 1
-    _rotationOffset: 0
-    _object: {fileID: 8555697339964580095, guid: a2e06c3db2fb8564ba99d7e4f2d8c5bd, type: 3}
-  - _biomeType: 0
-    _tileType: safe
-    _offset: 1
-    _rotationOffset: 0
-    _object: {fileID: 1828283439777536139, guid: b23234792b8a499498efab5e793c5157, type: 3}
-  - _biomeType: 0
-    _tileType: safe
-    _offset: 0
-    _rotationOffset: 0
-    _object: {fileID: 6275667563586245682, guid: 284dda84c6a44bc4084a5a6e639b8889, type: 3}
-  - _biomeType: 0
-    _tileType: safe
-    _offset: 0.5
-    _rotationOffset: 0
-    _object: {fileID: 2040252893387459855, guid: 6fce9d4ff27b2b0438992ff021e9cd53, type: 3}
-  - _biomeType: 0
-    _tileType: empty
-    _offset: 0
-    _rotationOffset: 0
-    _object: {fileID: 7157439795505718375, guid: 7068363e191474b4b8436b54fff262f2, type: 3}
-  node:
-    type: 
-    _arrayLocation: 0
-    visual: {fileID: 0}
-  thisObject: {fileID: 0}
-  percentToSpawn: 0
 --- !u!114 &1744584020540399731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +77,26 @@ MonoBehaviour:
     _offset: 0.5
     _rotationOffset: -90
     _object: {fileID: 8555697339964580095, guid: a2e06c3db2fb8564ba99d7e4f2d8c5bd, type: 3}
+  - _biomeType: 3
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 4888497019373938777, guid: da1e9845d26ba9b488073e8e3826e96b, type: 3}
+  - _biomeType: 0
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 4888497019373938777, guid: da1e9845d26ba9b488073e8e3826e96b, type: 3}
+  - _biomeType: 0
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 554872350293593750, guid: 942f186e5c9000741a6ec2f106a1f40d, type: 3}
+  - _biomeType: 0
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 346694918195813131, guid: caa843fc50962084bbe06bcc917bc637, type: 3}
   currentObject: {fileID: 0}
   percentToSpawn: 0
   targetSpawn: 80

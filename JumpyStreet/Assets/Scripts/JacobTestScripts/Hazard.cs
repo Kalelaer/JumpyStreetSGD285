@@ -5,6 +5,7 @@ using UnityEngine;
 public class Hazard : MonoBehaviour
 {
     [SerializeField] GameObject endNode;
+    [SerializeField] List<GameObject> nodeList;
     public float speed;
     public string startingSide;
     public Vector3 endPos;
