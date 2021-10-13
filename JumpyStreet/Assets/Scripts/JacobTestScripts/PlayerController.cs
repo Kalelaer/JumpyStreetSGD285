@@ -45,11 +45,12 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PerformHop());
                 if(spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.desert) {
                     if (onPlatform) {
-                        SetCurrentNodeFromX(); ;
+                        SetCurrentNodeFromX();
                     }
                     if(spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
                         if (onPlatform) {
                             this.transform.parent = null;
+                            newPlatform.GetComponent<Hazard>().isChild = false;
                             onPlatform = false;
                         }
                         MoveForward();
@@ -145,6 +146,7 @@ public class PlayerController : MonoBehaviour
                     if (spawner.activeRows[currentRow - 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
                         if (onPlatform) {
                             this.transform.parent = null;
+                            newPlatform.GetComponent<Hazard>().isChild = false;
                             onPlatform = false;
                             SetCurrentNodeFromX();
                         }
@@ -210,12 +212,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator PerformHop() { // probably just needs to be an animation
-        /*
+        
         Animator anim = playerModel.GetComponent<Animator>();
         anim.SetBool("isHopping", true);
         yield return new WaitForSeconds(moveDelay);
         anim.SetBool("isHopping", false);
-                */
         yield return null;
 
     }
@@ -303,12 +304,17 @@ public class PlayerController : MonoBehaviour
 
     private bool IsPlatform(Vector3 castPoint) {
         bool isPlatform = false;
+        if(newPlatform != null)
+        {
+            newPlatform.GetComponent<Hazard>().isChild = false;
+        }
         RaycastHit hit;
         Ray ray = new Ray(castPoint, -transform.up);
         if(Physics.Raycast(ray, out hit, 8f)) {
             if (hit.collider.gameObject.CompareTag("platform")) {
                 isPlatform = true;
                 newPlatform = hit.collider.gameObject;
+                newPlatform.GetComponent<Hazard>().isChild = true;
             }
         }
         return isPlatform;
@@ -451,17 +457,20 @@ public class PlayerController : MonoBehaviour
             this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
         }
         else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water && onPlatform) {
-            this.transform.position = new Vector3(transform.position.x, transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().transform.position.z);
+            this.transform.position = new Vector3(transform.position.x, transform.position.y, spawner.activeRows[currentRow].GetComponent<Row>().transform.position.z);
         }
     }
 
-    private void Death()
+    public void Death()
     {
         SceneManager.LoadScene("MainGame");
     }
 
-    private void OnDestroy()
+    private void OnTriggerEnter(Collider other)
     {
-        Death();
+        if (other.gameObject.CompareTag("hazard"))
+        {
+            Death();
+        }
     }
 }

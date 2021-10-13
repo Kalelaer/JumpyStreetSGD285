@@ -10,9 +10,12 @@ public class Hazard : MonoBehaviour
     public string startingSide;
     public Vector3 endPos;
     public float offset;
+    private GameObject player;
+    public bool isChild;
     [SerializeField] float destroyDistance;
     private void Awake()
     {
+         player = GameObject.FindGameObjectWithTag("Player");
         //Debug.Log("New Platform created");
     }
 
@@ -29,13 +32,25 @@ public class Hazard : MonoBehaviour
         endPos = new Vector3( endNode.transform.position.x, endNode.transform.position.y+offset,endNode.transform.position.z);
         this.transform.position = Vector3.MoveTowards(this.transform.position, endPos, speed * Time.deltaTime);
     }
+
     private void Update()
     {
         Vector3 distance = (this.transform.position - endPos);
 
         if (distance.magnitude <= destroyDistance)
         {
-            Destroy(this.gameObject);
+            if (isChild)
+            {
+                player.GetComponent<PlayerController>().Death();
+
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Debug.Log("The player is not a child. We're an adult");
+                Destroy(this.gameObject);
+            }
+
         }
     }
 }

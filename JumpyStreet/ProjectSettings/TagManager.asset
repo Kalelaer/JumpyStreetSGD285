@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Node
   - platform
+  - hazard
   layers:
   - Default
   - TransparentFX
