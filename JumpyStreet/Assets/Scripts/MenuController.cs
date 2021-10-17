@@ -23,10 +23,20 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject helpPanel;
     [SerializeField] private GameObject creditsPanel;
 
-    
+    [Header("Score")]
+    [SerializeField] private Text highscoreText;
+    [SerializeField] private int highscore;
+
     private void Awake() {
         SetUpAudio();
         SetUpMenu();
+
+        if (PlayerPrefs.GetInt("highscore") < 0)
+        {
+            PlayerPrefs.SetInt("highscore", 0);
+        }
+        highscore = PlayerPrefs.GetInt("highscore");
+        highscoreText.text = $"{highscore}";
     }
 
     //This should make sure the menu sound gets to play before the scene is changed.

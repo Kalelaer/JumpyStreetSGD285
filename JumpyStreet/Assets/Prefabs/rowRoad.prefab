@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8740355103392811973}
   m_Layer: 0
   m_Name: rowRoad
-  m_TagString: Untagged
+  m_TagString: row
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

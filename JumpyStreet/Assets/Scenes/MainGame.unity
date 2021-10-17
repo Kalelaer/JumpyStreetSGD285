@@ -1170,6 +1170,7 @@ MonoBehaviour:
   losePanel: {fileID: 2087351725}
   menuScoreText: {fileID: 385140313}
   gameScoreText: {fileID: 376601800}
+  finalScoreText: {fileID: 1082516784}
 --- !u!82 &526910828
 AudioSource:
   m_ObjectHideFlags: 0

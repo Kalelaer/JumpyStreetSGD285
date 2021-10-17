@@ -463,7 +463,33 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
-        SceneManager.LoadScene("MainGame");
+        List<GameObject> rowList = new List<GameObject>();
+        int score = menuController.GetComponent<GameMenuController>().playerScore;
+        int highscore = PlayerPrefs.GetInt("highscore");
+        PlayerPrefs.SetInt("score",score);
+        if (score > highscore) {
+            PlayerPrefs.SetInt("highscore",score);
+        }
+        Debug.Log($"Score: {score}, Highscore: {highscore}");
+
+        rowList.AddRange( GameObject.FindGameObjectsWithTag("row"));
+        foreach(GameObject row in rowList)
+        {
+            row.GetComponent<Row>().StopPlatformSpawn();
+            if(row.GetComponent<Row>().rowType == Biome.Type.road || row.GetComponent<Row>().rowType == Biome.Type.water)
+            {
+                foreach( GameObject platform  in row.GetComponent<Row>().activePlatforms)
+                {
+                    if (platform != null)
+                    {
+                        platform.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        menuController.GetComponent<GameMenuController>().LoseGame();
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnTriggerEnter(Collider other)

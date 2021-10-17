@@ -14,7 +14,7 @@ public class Row : MonoBehaviour
     [SerializeField] GameObject endNode;
     [SerializeField] public List<GameObject> activePlatforms;
     [SerializeField] int rowWidth;
-    [SerializeField] List<Group> carHazards;
+    [SerializeField] public List<Group> carHazards;
     public Vector3 targetPos;
     public bool canMove = false;
     public bool isBack;
@@ -22,6 +22,11 @@ public class Row : MonoBehaviour
     private void FixedUpdate()
     {
         
+    }
+    public void StopPlatformSpawn()
+    {
+        StopCoroutine("SendPlatforms");
+        Debug.LogWarning("Stopping the send platform coroutine");
     }
     public void SpawnNode(int width, /*optional*/ bool isHazard = false, int rowVal = 30, bool isBackWall = false)
     {

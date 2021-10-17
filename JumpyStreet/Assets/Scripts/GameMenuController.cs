@@ -18,6 +18,7 @@ public class GameMenuController : MonoBehaviour
         set { playerScoreNumber = value;
             menuScoreText.text = playerScoreNumber.ToString();
             gameScoreText.text = playerScoreNumber.ToString();
+            finalScoreText.text = playerScoreNumber.ToString();
         }
         get {return playerScoreNumber;}
     }
@@ -32,12 +33,14 @@ public class GameMenuController : MonoBehaviour
     [SerializeField] private GameObject losePanel;
     [SerializeField] private Text menuScoreText;
     [SerializeField] private Text gameScoreText;
+    [SerializeField] private Text finalScoreText;
 
 
     private void Awake() {
         SetUpAudio();
         SetUpMenu();
         playerScore = 0;
+
     }
 
     private void Update() {
@@ -88,11 +91,19 @@ public class GameMenuController : MonoBehaviour
         scorePanel.SetActive(true);
         losePanel.SetActive(false);
     }
+    public void LoseGame()
+    {
+        pausePanel.SetActive(false);
+        scorePanel.SetActive(false);
+        losePanel.SetActive(true);
+        finalScoreText.text = playerScore.ToString();
+    }
 
     public void OnEscapeKeyPress() {
         soundPlayer.PlayOneShot(menuSelect);
         pausePanel.SetActive(true);
         scorePanel.SetActive(false);
+        menuScoreText.text = playerScore.ToString();
         //Call for pause game.
     }
 }

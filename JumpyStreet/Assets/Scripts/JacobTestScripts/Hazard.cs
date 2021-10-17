@@ -47,7 +47,7 @@ public class Hazard : MonoBehaviour
             }
             else
             {
-                Debug.Log("The player is not a child. We're an adult");
+                //Debug.Log("The player is not a child. We're an adult");
                 Destroy(this.gameObject);
             }
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 720102210219855752}
   m_Layer: 0
   m_Name: rowForest
-  m_TagString: Untagged
+  m_TagString: row
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,8 +50,13 @@ MonoBehaviour:
   rowValue: 0
   node: {fileID: 3120870944099353051, guid: a476ff21c35d23540a68bb1eb6d5e3d4, type: 3}
   nodeArray: []
+  hazardStart: 0
   platform: {fileID: 1493958779012120596, guid: b9de24523a11d714db3851b5f0f9d527, type: 3}
+  startingNode: {fileID: 0}
+  endNode: {fileID: 0}
+  activePlatforms: []
   rowWidth: 0
+  carHazards: []
   targetPos: {x: 0, y: 0, z: 0}
   canMove: 0
   isBack: 0
