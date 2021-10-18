@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &348891905084421595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180531339073954194}
+  - component: {fileID: 7681309219001685699}
+  - component: {fileID: 1037616998089357610}
+  - component: {fileID: 6325529484247730286}
+  - component: {fileID: 3322728654684709986}
+  m_Layer: 0
+  m_Name: rowDesertHazard
+  m_TagString: row
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180531339073954194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348891905084421595}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 31, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7681309219001685699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348891905084421595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7441d44f869e61743977ff4836fdd0d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rowType: 3
+  rowValue: 0
+  node: {fileID: 3120870944099353051, guid: a476ff21c35d23540a68bb1eb6d5e3d4, type: 3}
+  nodeArray: []
+  hazardStart: 0
+  platform: {fileID: 1493958779012120596, guid: b9de24523a11d714db3851b5f0f9d527, type: 3}
+  startingNode: {fileID: 0}
+  endNode: {fileID: 0}
+  activePlatforms: []
+  rowWidth: 0
+  carHazards:
+  - _biomeType: 3
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 220068239666725958, guid: 0fe3902cddec6ac44bd3c36e006a5d21, type: 3}
+  - _biomeType: 3
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 1115017258989003149, guid: a9455dbaff888ce49a1e170e3a4d6b92, type: 3}
+  - _biomeType: 3
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 8615905350054912704, guid: c32a433a50b099f46bf985c0e69b9eab, type: 3}
+  - _biomeType: 3
+    _tileType: 
+    _offset: 0
+    _rotationOffset: 0
+    _object: {fileID: 266620586483053936, guid: 85e18714c8463f3468f82ddb29e4afa9, type: 3}
+  targetPos: {x: 0, y: 0, z: 0}
+  canMove: 0
+  isBack: 0
+--- !u!33 &1037616998089357610
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348891905084421595}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6325529484247730286
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348891905084421595}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b4053509a195d1b4b9814e53062f6b2f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3322728654684709986
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348891905084421595}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

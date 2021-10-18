@@ -107,7 +107,7 @@ public class Row : MonoBehaviour
     {
         GameObject car = null;
         float carOffset = 0;
-         if (rowType == Biome.Type.road){
+         if (rowType == Biome.Type.road || rowType == Biome.Type.forestHazard || rowType == Biome.Type.desertHazard) {
             int carHazardsLength = carHazards.Count;
             int selector = Random.Range(0,carHazardsLength);
             //print(selector);
@@ -116,7 +116,7 @@ public class Row : MonoBehaviour
             carOffset = carHazards[selector].Offset;
             timeDelay+=1;
             speed+=1;
-        }
+         }
         while (rowValue > 0)
         {
             if (rowType == Biome.Type.water)
@@ -160,7 +160,7 @@ public class Row : MonoBehaviour
                 activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed);
             }
 
-            if (rowType == Biome.Type.road)
+            if (rowType == Biome.Type.road || rowType == Biome.Type.forestHazard || rowType == Biome.Type.desertHazard)
             {
                 Vector3 newRotation = new Vector3(90,0,45);
                 Vector3 newScale = new Vector3(0,0,0);
