@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Biome
 {
-    public enum Type{ forest, road, water, desert };
+    public enum Type{ forest, road, water, desert, desertHazard, forestHazard };
     [SerializeField] Type _biomeType;
     [SerializeField] string _biomeName;
     [SerializeField] int _maxBiomeLength;

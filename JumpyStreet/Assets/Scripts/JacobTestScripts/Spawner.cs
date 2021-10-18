@@ -31,6 +31,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] List<GameObject> roadRows;
     [SerializeField] int maxDesert;
     [SerializeField] List<GameObject> desertRows;
+    [SerializeField] int maxDesertHazard;
+    [SerializeField] List<GameObject> desertHazardRows;
+    [SerializeField] int maxForestHazard;
+    [SerializeField] List<GameObject> forestHazardRows;
 
     [Header("Row Spawn/Move Parameters")]
     [SerializeField] private float rowMoveSpeed;
@@ -111,6 +115,28 @@ public class Spawner : MonoBehaviour
                             Destroy(row);
                         }
                     }
+                    else if (row.GetComponent<Row>().rowType == Biome.Type.forestHazard) {
+                        if (forestHazardRows.ToArray().Length < maxRoad) {
+                            forestHazardRows.Add(row);
+                            foreach (GameObject platform in row.GetComponent<Row>().activePlatforms) {
+                                Destroy(platform);
+                            }
+                        }
+                        else {
+                            Destroy(row);
+                        }
+                    }
+                    else if (row.GetComponent<Row>().rowType == Biome.Type.desertHazard) {
+                        if (desertHazardRows.ToArray().Length < maxRoad) {
+                            desertHazardRows.Add(row);
+                            foreach (GameObject platform in row.GetComponent<Row>().activePlatforms) {
+                                Destroy(platform);
+                            }
+                        }
+                        else {
+                            Destroy(row);
+                        }
+                    }
                 }
                 
             }
@@ -124,7 +150,7 @@ public class Spawner : MonoBehaviour
     }
 
     private void ChooseBiome(){
-        int biomeSelector = Random.Range(0,4);
+        int biomeSelector = Random.Range(0,biomeList.Count);
         previousBiome = currentBiome;
         bool tryAgain = false;
         previousBiomeHazard = currentBiomeHazard;
@@ -181,6 +207,12 @@ public class Spawner : MonoBehaviour
             case "road":
                 objectToSpawn = mainRowsObjects[3];
                 break;
+            case "forestHazard":
+                objectToSpawn = mainRowsObjects[4];
+                break;
+            case "desertHazard":
+                objectToSpawn = mainRowsObjects[4];
+                break;
         }
 
         //Spawns the Row //This can probably be combined with the function above
@@ -220,6 +252,22 @@ public class Spawner : MonoBehaviour
                     oldRowInArray = true;
                 }
                 break;
+            case "forestHazard":
+                if (forestHazardRows.Count > 0) {
+                    newRow = forestHazardRows[0];
+                    forestHazardRows.RemoveAt(0);
+                    newRow.transform.position = rowSpawn;
+                    oldRowInArray = true;
+                }
+                break;
+            case "desertHazard":
+                if (desertHazardRows.Count > 0) {
+                    newRow = desertHazardRows[0];
+                    desertHazardRows.RemoveAt(0);
+                    newRow.transform.position = rowSpawn;
+                    oldRowInArray = true;
+                }
+                break;
         }
         if (!oldRowInArray) {
             newRow = Instantiate(objectToSpawn, rowSpawn, Quaternion.identity);
@@ -230,7 +278,7 @@ public class Spawner : MonoBehaviour
 
 
         //spawns nodes
-        if (currentBiome == "road" || currentBiome == "water" ){
+        if (currentBiome == "road" || currentBiome == "water" || currentBiome == "desertHazard" || currentBiome == "forestHazard") {
             newRow.GetComponent<Row>().SpawnNode(rowWidth,true);
         }
         else{

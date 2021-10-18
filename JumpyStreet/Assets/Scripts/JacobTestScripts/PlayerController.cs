@@ -321,41 +321,49 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator FaceForward() {
-        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 0f, playerCharacterModel.transform.rotation.z)) {
-            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 0f, 0f)) {
+            //Debug.Log("FaceForward");
+            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
             yield return new WaitForFixedUpdate();
+            
         }
-        Debug.Log("FaceForward");
+        
         yield return null;
     }
 
     private IEnumerator FaceBackward() {
-        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 180f, playerCharacterModel.transform.rotation.z))
+        
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 180f, 0f))
         {
-            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
+            //Debug.Log("FaceBackwards");
+            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, 180f, 0f);
             yield return new WaitForFixedUpdate();
         }
-        Debug.Log("FaceBackwards");
+        
         yield return null;
     }
 
     private IEnumerator FaceLeft() {
-        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 270f, playerCharacterModel.transform.rotation.z))
+        
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 270f, 0f))
         {
-            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
+            //Debug.Log("FaceLeft");
+            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, 270f, 0f);
             yield return new WaitForFixedUpdate();
+            
         }
-        Debug.Log("FaceLeft");
+        
         yield return null;
     }
 
     private IEnumerator FaceRight() {
-        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 90f, playerCharacterModel.transform.rotation.z))
+        
+        while (playerCharacterModel.transform.rotation != Quaternion.Euler(-90f, 90f, 0f))
         {
-            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, playerCharacterModel.transform.rotation.y + 1, 0f);
-            yield return new WaitForFixedUpdate();
+            //Debug.Log("FaceRight");
+            playerCharacterModel.transform.rotation = Quaternion.Euler(-90f, 90f, 0f);
         }
-        Debug.Log("FaceRight");
+        
         yield return null;
     }
 
@@ -476,7 +484,7 @@ public class PlayerController : MonoBehaviour
         foreach(GameObject row in rowList)
         {
             row.GetComponent<Row>().StopPlatformSpawn();
-            if(row.GetComponent<Row>().rowType == Biome.Type.road || row.GetComponent<Row>().rowType == Biome.Type.water)
+            if(row.GetComponent<Row>().rowType == Biome.Type.road || row.GetComponent<Row>().rowType == Biome.Type.water || row.GetComponent<Row>().rowType == Biome.Type.forestHazard || row.GetComponent<Row>().rowType == Biome.Type.desertHazard)
             {
                 foreach( GameObject platform  in row.GetComponent<Row>().activePlatforms)
                 {
