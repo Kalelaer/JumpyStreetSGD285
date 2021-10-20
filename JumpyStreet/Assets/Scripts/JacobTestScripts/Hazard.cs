@@ -10,6 +10,7 @@ public class Hazard : MonoBehaviour
     public string startingSide;
     public Vector3 endPos;
     public float offset;
+    public float scale;
     private GameObject player;
     public bool isChild;
     [SerializeField] float destroyDistance;

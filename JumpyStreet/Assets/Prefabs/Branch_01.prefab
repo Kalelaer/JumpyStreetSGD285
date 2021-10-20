@@ -69,6 +69,8 @@ MonoBehaviour:
   startingSide: 
   endPos: {x: 0, y: 0, z: 0}
   offset: 0
+  scale: 1
+  isChild: 0
   destroyDistance: 0
 --- !u!23 &1493958779014389460
 MeshRenderer:

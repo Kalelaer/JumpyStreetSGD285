@@ -113,8 +113,8 @@ public class Row : MonoBehaviour
             //print(selector);
             //Debug.Log("Choosing Car");
             car = carHazards[selector].Object;
-            carOffset = carHazards[selector].Offset;
-            timeDelay+=1;
+            carOffset = car.GetComponent<Hazard>().offset;
+            timeDelay +=1;
             speed+=1;
          }
         while (rowValue > 0)
@@ -163,17 +163,19 @@ public class Row : MonoBehaviour
             if (rowType == Biome.Type.road || rowType == Biome.Type.forestHazard || rowType == Biome.Type.desertHazard)
             {
                 Vector3 newRotation = new Vector3(90,0,45);
-                Vector3 newScale = new Vector3(0,0,0);
+                float carScale = car.GetComponent<Hazard>().scale;
+                Vector3 newScale = new Vector3(carScale, carScale, carScale);
                 if(side == "left"){
                     newRotation = new Vector3(-90,180,90);
                 }
                 else if (side == "right"){
                     newRotation = new Vector3(-90,180,-90);
                 }
-                Vector3 startPos = new Vector3(startingNode.transform.position.x,startingNode.transform.position.y+.5f, startingNode.transform.position.z);
+                Vector3 startPos = new Vector3(startingNode.transform.position.x,startingNode.transform.position.y + carOffset, startingNode.transform.position.z);
                 activePlatforms.Add(Instantiate(car, startPos, Quaternion.identity));
                 int index = activePlatforms.Count - 1;
                 activePlatforms[index].transform.rotation = Quaternion.Euler(newRotation);
+                activePlatforms[index].transform.localScale = newScale;
                 activePlatforms[index].transform.parent = this.transform;
                 activePlatforms[index].GetComponent<Hazard>().SetInfo(endNode, speed, side, carOffset, 2f);
             }

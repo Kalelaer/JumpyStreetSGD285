@@ -647,7 +647,8 @@ MonoBehaviour:
   speed: 0
   startingSide: 
   endPos: {x: 0, y: 0, z: 0}
-  offset: 0
+  offset: 0.3
+  scale: 1
   isChild: 0
   destroyDistance: 0
 --- !u!65 &6338177153820723014
