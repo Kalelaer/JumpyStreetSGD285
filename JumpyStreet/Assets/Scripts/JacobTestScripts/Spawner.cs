@@ -211,7 +211,7 @@ public class Spawner : MonoBehaviour
                 objectToSpawn = mainRowsObjects[4];
                 break;
             case "desertHazard":
-                objectToSpawn = mainRowsObjects[4];
+                objectToSpawn = mainRowsObjects[5];
                 break;
         }
 
