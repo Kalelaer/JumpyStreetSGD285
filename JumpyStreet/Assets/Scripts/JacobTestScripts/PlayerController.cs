@@ -39,145 +39,183 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeSinceMove += Time.deltaTime;
-        if(timeSinceMove > moveDelay) {
-            if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow)) {
-                StartCoroutine(PerformHop());
-                if(spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.desert) {
-                    if (onPlatform) {
-                        SetCurrentNodeFromX();
+        if (!GameMenuController.gMC.paused)
+        {
+            if (timeSinceMove > moveDelay)
+            {
+                if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    StartCoroutine(PerformHop());
+                    if (spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.desert)
+                    {
+                        if (onPlatform)
+                        {
+                            SetCurrentNodeFromX();
+                        }
+                        if (spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
+                        {
+                            if (onPlatform)
+                            {
+                                this.transform.parent = null;
+                                newPlatform.GetComponent<Hazard>().isChild = false;
+                                onPlatform = false;
+                            }
+                            MoveForward();
+
+                        }
                     }
-                    if(spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
-                        if (onPlatform) {
+                    else if (spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.water)
+                    {
+                        if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1)))
+                        {
+                            onPlatform = true;
+                            transform.SetParent(newPlatform.transform);
+                            MoveForward();
+                        }
+                        else
+                        {
+                            //fall and die?
+                            Death();
+                        }
+                    }
+                    else
+                    {
+                        if (onPlatform)
+                        {
                             this.transform.parent = null;
-                            newPlatform.GetComponent<Hazard>().isChild = false;
                             onPlatform = false;
+                            SetCurrentNodeFromX();
                         }
                         MoveForward();
-                        
                     }
-                }else if (spawner.activeRows[currentRow + 1].GetComponent<Row>().rowType == Biome.Type.water) {
-                    if(IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 1))) {
-                        onPlatform = true;
-                        transform.SetParent(newPlatform.transform);
-                        MoveForward();
-                    }
-                    else {
-                        //fall and die?
-                        Death();
-                    }
+                    timeSinceMove = 0;
                 }
-                else {
-                    if (onPlatform) {
-                        this.transform.parent = null;
-                        onPlatform = false;
-                        SetCurrentNodeFromX();
-                    }
-                    MoveForward();
-                }
-                timeSinceMove = 0;
-            }
-            if(Input.GetKeyDown("a") || Input.GetKeyDown(KeyCode.LeftArrow)) {
-                StartCoroutine(PerformHop());
-                if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
+                if (Input.GetKeyDown("a") || Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    StartCoroutine(PerformHop());
+                    if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert)
+                    {
 
-                    if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode - 1].GetComponent<Node>().child == null) {
-                        MoveLeft();
+                        if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode - 1].GetComponent<Node>().child == null)
+                        {
+                            MoveLeft();
+                        }
                     }
-                }
-                else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water) {
-                    if (IsPlatform(new Vector3(this.transform.position.x -1, this.transform.position.y, this.transform.position.z))) {
-                        onPlatform = true;
-                        if (newPlatform.transform != this.transform.parent) {
-                            transform.SetParent(newPlatform.transform);
+                    else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water)
+                    {
+                        if (IsPlatform(new Vector3(this.transform.position.x - 1, this.transform.position.y, this.transform.position.z)))
+                        {
+                            onPlatform = true;
+                            if (newPlatform.transform != this.transform.parent)
+                            {
+                                transform.SetParent(newPlatform.transform);
+                            }
+                            else
+                            {
+                                Debug.Log("Moving on current platform.");
+                            }
+                            MoveLeft();
                         }
                         else
                         {
-                            Debug.Log("Moving on current platform.");
+                            //fall and die?
+                            Death();
                         }
+                    }
+                    else
+                    {
                         MoveLeft();
                     }
-                    else {
-                        //fall and die?
-                        Death();
-                    }
+                    timeSinceMove = 0;
                 }
-                else {
-                    MoveLeft();
-                }
-                timeSinceMove = 0;
-            }
-            if (Input.GetKeyDown("d") || Input.GetKeyDown(KeyCode.RightArrow)) {
-                StartCoroutine(PerformHop());
-                if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert) {
+                if (Input.GetKeyDown("d") || Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    StartCoroutine(PerformHop());
+                    if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desert)
+                    {
 
-                    if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode + 1].GetComponent<Node>().child == null) {
-                        MoveRight();
+                        if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode + 1].GetComponent<Node>().child == null)
+                        {
+                            MoveRight();
+                        }
                     }
-                }
-                else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water) {
-                    if (IsPlatform(new Vector3(this.transform.position.x + 1, this.transform.position.y, this.transform.position.z))) {
-                        onPlatform = true;
-                        if (newPlatform.transform != this.transform.parent) {
-                            transform.SetParent(newPlatform.transform);
+                    else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water)
+                    {
+                        if (IsPlatform(new Vector3(this.transform.position.x + 1, this.transform.position.y, this.transform.position.z)))
+                        {
+                            onPlatform = true;
+                            if (newPlatform.transform != this.transform.parent)
+                            {
+                                transform.SetParent(newPlatform.transform);
+                            }
+                            else
+                            {
+                                Debug.Log("Moving on current platform.");
+                            }
+                            MoveRight();
                         }
                         else
                         {
-                            Debug.Log("Moving on current platform.");
+                            //fall and die?
+                            Death();
                         }
+                    }
+                    else
+                    {
                         MoveRight();
                     }
-                    else {
-                        //fall and die?
-                        Death();
-                    }
+                    timeSinceMove = 0;
                 }
-                else {
-                    MoveRight();
-                }
-                timeSinceMove = 0;
-            }
-            if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow)) {
-                StartCoroutine(PerformHop());
-                if (spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.desert) {
-                    if (onPlatform) {
-                        SetCurrentNodeFromX(); ;
+                if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    StartCoroutine(PerformHop());
+                    if (spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.forest || spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.desert)
+                    {
+                        if (onPlatform)
+                        {
+                            SetCurrentNodeFromX(); ;
+                        }
+                        if (spawner.activeRows[currentRow - 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
+                        {
+                            if (onPlatform)
+                            {
+                                this.transform.parent = null;
+                                newPlatform.GetComponent<Hazard>().isChild = false;
+                                onPlatform = false;
+                                SetCurrentNodeFromX();
+                            }
+                            MoveBackwards();
+                        }
                     }
-                    if (spawner.activeRows[currentRow - 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null) {
-                        if (onPlatform) {
+                    else if (spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.water)
+                    {
+                        if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 1)))
+                        {
+                            onPlatform = true;
+                            transform.SetParent(newPlatform.transform);
+                            MoveBackwards();
+                        }
+                        else
+                        {
+                            //fall and die?
+                            Death();
+                        }
+                    }
+                    else
+                    {
+                        if (onPlatform)
+                        {
                             this.transform.parent = null;
-                            newPlatform.GetComponent<Hazard>().isChild = false;
                             onPlatform = false;
                             SetCurrentNodeFromX();
                         }
                         MoveBackwards();
                     }
+                    timeSinceMove = 0;
                 }
-                else if (spawner.activeRows[currentRow - 1].GetComponent<Row>().rowType == Biome.Type.water) {
-                    if (IsPlatform(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 1))) {
-                        onPlatform = true;
-                        transform.SetParent(newPlatform.transform);
-                        MoveBackwards();
-                    }
-                    else {
-                        //fall and die?
-                        Death();
-                    }
-                }
-                else {
-                    if (onPlatform) {
-                        this.transform.parent = null;
-                        onPlatform = false;
-                        SetCurrentNodeFromX();
-                    }
-                    MoveBackwards();
-                }
-                timeSinceMove = 0;
             }
         }
-
-        
-    }
+        timeSinceMove += Time.deltaTime;    }
 
     public void SpawnPlayerModel() {
         if(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
@@ -204,7 +242,9 @@ public class PlayerController : MonoBehaviour
         {
 
         }
-
+        playerCharacterPrefab = Resources.Load<GameObject>($"Characters/{PlayerPrefs.GetString("Character")}");
+        print(Resources.Load<GameObject>($"Characters/{PlayerPrefs.GetString("Character")}"));
+        print(playerCharacterPrefab);
         this.transform.position = new Vector3(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.x, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.y + modelYOffest, spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].transform.position.z);
 
         playerCharacterModel = Instantiate(playerCharacterPrefab, this.transform.position, Quaternion.identity, playerModel.transform);

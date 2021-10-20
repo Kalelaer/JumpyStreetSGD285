@@ -15,6 +15,7 @@ public class Row : MonoBehaviour
     [SerializeField] public List<GameObject> activePlatforms;
     [SerializeField] int rowWidth;
     [SerializeField] public List<Group> carHazards;
+    private GameMenuController menuController;
     public Vector3 targetPos;
     public bool canMove = false;
     public bool isBack;
@@ -117,7 +118,7 @@ public class Row : MonoBehaviour
             timeDelay +=1;
             speed+=1;
          }
-        while (rowValue > 0)
+        while (rowValue > 0 && !GameMenuController.gMC.paused)
         {
             if (rowType == Biome.Type.water)
             {

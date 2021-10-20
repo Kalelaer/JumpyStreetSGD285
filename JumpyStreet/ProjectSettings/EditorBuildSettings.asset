@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/JacobTesting.unity
     guid: f83b3dae78406b84997649f9d69c5589
   - enabled: 1

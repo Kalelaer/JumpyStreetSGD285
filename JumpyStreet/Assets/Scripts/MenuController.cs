@@ -22,6 +22,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject helpPanel;
     [SerializeField] private GameObject creditsPanel;
+    [SerializeField] private GameObject characterSelectPanel;
 
     [Header("Score")]
     [SerializeField] private Text highscoreText;
@@ -42,6 +43,12 @@ public class MenuController : MonoBehaviour
     //This should make sure the menu sound gets to play before the scene is changed.
     public void OnPlayButtonClick() {
         StartCoroutine(PlayButtonSound());
+    }
+
+    public void OnCharacterSelectButtonClick()
+    {
+        menuPanel.SetActive(false);
+        characterSelectPanel.SetActive(true);
     }
     private IEnumerator PlayButtonSound() {
         soundPlayer.PlayOneShot(menuForward);
@@ -89,6 +96,15 @@ public class MenuController : MonoBehaviour
         menuPanel.SetActive(true);
         creditsPanel.SetActive(false);
         helpPanel.SetActive(false);
+        characterSelectPanel.SetActive(false);
     }
 
+    private void OnValidate()
+    {
+        print("cleared stuff up");
+        if (!Application.IsPlaying(this.gameObject))
+        {
+            PlayerPrefs.SetInt("highscore", highscore);
+        }
+    }
 }

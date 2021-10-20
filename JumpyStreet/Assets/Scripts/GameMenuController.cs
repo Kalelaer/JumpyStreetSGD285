@@ -13,6 +13,9 @@ using UnityEngine.UI;
 
 public class GameMenuController : MonoBehaviour
 {
+    public static GameMenuController gMC;
+    public bool paused;
+
     private int playerScoreNumber;
     public int playerScore {
         set { playerScoreNumber = value;
@@ -37,6 +40,8 @@ public class GameMenuController : MonoBehaviour
 
 
     private void Awake() {
+        gMC = this;
+        paused = false;
         SetUpAudio();
         SetUpMenu();
         playerScore = 0;
@@ -74,6 +79,7 @@ public class GameMenuController : MonoBehaviour
     }
 
     public void OnResumeuttonClick() {
+        paused = false;
         soundPlayer.PlayOneShot(menuForward);
         SetUpMenu();
         //Call for resume game.
@@ -93,6 +99,7 @@ public class GameMenuController : MonoBehaviour
     }
     public void LoseGame()
     {
+        paused = true;
         pausePanel.SetActive(false);
         scorePanel.SetActive(false);
         losePanel.SetActive(true);
@@ -100,10 +107,19 @@ public class GameMenuController : MonoBehaviour
     }
 
     public void OnEscapeKeyPress() {
+        paused = true;
         soundPlayer.PlayOneShot(menuSelect);
         pausePanel.SetActive(true);
         scorePanel.SetActive(false);
         menuScoreText.text = playerScore.ToString();
+
+        int score = playerScore;
+        int highscore = PlayerPrefs.GetInt("highscore");
+        PlayerPrefs.SetInt("score", score);
+        if (score > highscore)
+        {
+            PlayerPrefs.SetInt("highscore", score);
+        }
         //Call for pause game.
     }
 }

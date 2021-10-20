@@ -176,13 +176,6 @@ public class Spawner : MonoBehaviour
         //print($" current biome {currentBiome}, Biome Length {remainingBiome}");
     }
     public void SpawnRow( int rowVal, /*optional*/ float offsetOverride = 1f){
-        //increment player score here
-
-
-
-
-
-        /////////////////////////////
         //When to chose a new biome
         if(remainingBiome == 0){
             ChooseBiome();

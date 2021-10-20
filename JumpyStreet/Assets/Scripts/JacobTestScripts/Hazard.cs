@@ -31,7 +31,10 @@ public class Hazard : MonoBehaviour
     void FixedUpdate()
     {
         endPos = new Vector3( endNode.transform.position.x, endNode.transform.position.y+offset,endNode.transform.position.z);
-        this.transform.position = Vector3.MoveTowards(this.transform.position, endPos, speed * Time.deltaTime);
+        if (!GameMenuController.gMC.paused)
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, endPos, speed * Time.deltaTime);
+        }
     }
 
     private void Update()
