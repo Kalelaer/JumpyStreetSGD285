@@ -16,7 +16,7 @@ public class MenuController : MonoBehaviour
     private AudioSource soundPlayer;
     private AudioClip menuBack;
     private AudioClip menuForward;
-    private AudioClip menuSelect;
+    public AudioClip menuSelect;
     [SerializeField] private string nextLevel;
 
     [SerializeField] private GameObject menuPanel;
@@ -47,6 +47,7 @@ public class MenuController : MonoBehaviour
 
     public void OnCharacterSelectButtonClick()
     {
+        soundPlayer.PlayOneShot(menuForward);
         menuPanel.SetActive(false);
         characterSelectPanel.SetActive(true);
     }
