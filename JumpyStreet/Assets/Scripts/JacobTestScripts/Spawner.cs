@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float rowMoveSpeed;
     [SerializeField] PlayerController playerController;
 
-    private void Start()
+    private void Awake()
     {
         Vector3 startingZoneLocation = new Vector3(0,1,-12);
         //CreateStartingZone();

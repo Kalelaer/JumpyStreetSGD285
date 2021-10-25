@@ -90,7 +90,7 @@ public class GameMenuController : MonoBehaviour
     private IEnumerator PlayLevel() {
         soundPlayer.PlayOneShot(menuForward);
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         yield return null;
     }
 
