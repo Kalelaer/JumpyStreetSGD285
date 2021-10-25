@@ -526,7 +526,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7897784625555414285, guid: 644e108d6ca5bf448add726306f18ea3, type: 3}
       propertyPath: characterList.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7897784625555414285, guid: 644e108d6ca5bf448add726306f18ea3, type: 3}
       propertyPath: characterList.Array.data[2]

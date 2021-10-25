@@ -66,7 +66,7 @@ MonoBehaviour:
     _tileType: 
     _offset: 0.3
     _rotationOffset: 0
-    _object: {fileID: 8615905350054912704, guid: c32a433a50b099f46bf985c0e69b9eab, type: 3}
+    _object: {fileID: 614574638090884897, guid: 858a0cbf49ae9ee479bd252bcb6ad3cb, type: 3}
   - _biomeType: 0
     _tileType: 
     _offset: 0
@@ -82,6 +82,11 @@ MonoBehaviour:
     _offset: 0.4
     _rotationOffset: 0
     _object: {fileID: 1115017258989003149, guid: a9455dbaff888ce49a1e170e3a4d6b92, type: 3}
+  - _biomeType: 0
+    _tileType: 
+    _offset: 0.3
+    _rotationOffset: 0
+    _object: {fileID: 8615905350054912704, guid: c32a433a50b099f46bf985c0e69b9eab, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   canMove: 0
   isBack: 0

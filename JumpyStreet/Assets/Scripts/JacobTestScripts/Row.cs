@@ -114,6 +114,10 @@ public class Row : MonoBehaviour
             //print(selector);
             //Debug.Log("Choosing Car");
             car = carHazards[selector].Object;
+            if (car.name == "Rat_Train")
+            {
+                speed = 12f;
+            }
             carOffset = car.GetComponent<Hazard>().offset;
             timeDelay +=1;
             speed+=1;
