@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-    private AudioSource soundPlayer;
+    public AudioSource soundPlayer;
     private AudioClip menuBack;
     private AudioClip menuForward;
     public AudioClip menuSelect;
