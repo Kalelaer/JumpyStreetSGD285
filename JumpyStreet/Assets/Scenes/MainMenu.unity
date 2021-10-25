@@ -525,6 +525,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7897784625555414285, guid: 644e108d6ca5bf448add726306f18ea3, type: 3}
+      propertyPath: menuController
+      value: 
+      objectReference: {fileID: 526910827}
+    - target: {fileID: 7897784625555414285, guid: 644e108d6ca5bf448add726306f18ea3, type: 3}
       propertyPath: characterList.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -1810,6 +1814,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c99b837761b8f274c942565e23fc39eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundPlayer: {fileID: 0}
+  menuSelect: {fileID: 0}
   nextLevel: MainGame
   menuPanel: {fileID: 1093923084}
   helpPanel: {fileID: 2087351725}

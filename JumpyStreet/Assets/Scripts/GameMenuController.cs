@@ -26,10 +26,12 @@ public class GameMenuController : MonoBehaviour
         get {return playerScoreNumber;}
     }
 
-    private AudioSource soundPlayer;
+    public AudioSource soundPlayer;
     private AudioClip menuBack;
     private AudioClip menuForward;
     private AudioClip menuSelect;
+    public AudioClip deathSound;
+    public AudioClip jumpSound;
 
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject scorePanel;
@@ -85,12 +87,26 @@ public class GameMenuController : MonoBehaviour
         //Call for resume game.
     }
 
+    private IEnumerator PlayLevel() {
+        soundPlayer.PlayOneShot(menuForward);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene("MainGame");
+        yield return null;
+    }
+
+    public void OnAgainButtonClick() {
+
+        StartCoroutine(PlayLevel());
+    }
+
     private void SetUpAudio() {
         soundPlayer = this.GetComponent<AudioSource>();
         menuBack = Resources.Load<AudioClip>("SFX/menuBack");
         menuForward = Resources.Load<AudioClip>("SFX/menuValidate");
         menuSelect = Resources.Load<AudioClip>("SFX/menuSelect");
-    }
+        deathSound = Resources.Load<AudioClip>("SFX/smack");
+        jumpSound = Resources.Load<AudioClip>("SFX/jumpSound");
+}
 
     public void SetUpMenu() {
         pausePanel.SetActive(false);

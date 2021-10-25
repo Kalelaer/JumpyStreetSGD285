@@ -24,14 +24,13 @@ public class PlayerController : MonoBehaviour
     private float timeSinceMove;
     private GameObject newPlatform;
     private GameObject newNode;
-    private string raycastReturn;
     [SerializeField] int currentRow;
     [SerializeField] int currentNode;
     private bool onPlatform;
-    
+
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         spawner = masterSpawner.GetComponent<Spawner>();
     }
@@ -255,6 +254,7 @@ public class PlayerController : MonoBehaviour
         
         Animator anim = playerModel.GetComponent<Animator>();
         anim.SetBool("isHopping", true);
+        menuController.GetComponent<GameMenuController>().soundPlayer.PlayOneShot(menuController.GetComponent<GameMenuController>().jumpSound);
         yield return new WaitForSeconds(moveDelay);
         anim.SetBool("isHopping", false);
         yield return null;
@@ -327,7 +327,7 @@ public class PlayerController : MonoBehaviour
         yield return null;
     }
 
-    private bool IsNode(Vector3 castPoint) {
+    /*private bool IsNode(Vector3 castPoint) {
         bool isGround = false;
         RaycastHit hit;
         Ray ray = new Ray(castPoint, -transform.up);
@@ -340,7 +340,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         return isGround;
-    }
+    }*/
 
     private bool IsPlatform(Vector3 castPoint) {
         bool isPlatform = false;
@@ -535,7 +535,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
+        menuController.GetComponent<GameMenuController>().soundPlayer.PlayOneShot(menuController.GetComponent<GameMenuController>().deathSound);
         menuController.GetComponent<GameMenuController>().LoseGame();
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -546,5 +546,9 @@ public class PlayerController : MonoBehaviour
         {
             Death();
         }
+    }
+
+    private void SetUpSounds() {
+
     }
 }

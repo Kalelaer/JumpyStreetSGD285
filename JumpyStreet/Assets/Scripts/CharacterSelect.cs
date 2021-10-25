@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour
 {
+    [SerializeField] MenuController menuController;
     [SerializeField] List<GameObject> characterList;
     [SerializeField] GameObject currentCharacter;
     [SerializeField] string currentCharacterName;
@@ -56,6 +57,7 @@ public class CharacterSelect : MonoBehaviour
 
     public void ButtonLeft()
     {
+        menuController.soundPlayer.PlayOneShot(menuController.menuSelect);
         if (selector <= 0)
         {
             selector = characterList.Count - 1;
@@ -76,6 +78,7 @@ public class CharacterSelect : MonoBehaviour
 
     public void ButtonRight()
     {
+        menuController.soundPlayer.PlayOneShot(menuController.menuSelect);
         if (selector >= characterList.Count - 1)
         {
             selector = 0;
