@@ -16,7 +16,14 @@ public class CharacterSelect : MonoBehaviour
 
     private void Awake()
     {
-        characterList.AddRange( GameObject.FindGameObjectsWithTag("Player"));
+        //GameObject[] tempArray = Resources.LoadAll("Characters") as GameObject[];
+        //characterList.AddRange(Resources.LoadAll("Characters", typeof(GameObject)) as GameObject[]);
+        foreach (GameObject g in Resources.LoadAll("Characters", typeof(GameObject)))
+        {
+            Debug.Log("prefab found: " + g.name);
+            characterList.Add(g);
+        }
+        //characterList.AddRange( GameObject.FindGameObjectsWithTag("Player"));
         charSelectRotVal = 360 / characterList.Count;
         selector = 0;
         characterRotLoc = new float[characterList.Count];
