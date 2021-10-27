@@ -511,6 +511,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.water && onPlatform) {
             this.transform.position = new Vector3(transform.position.x, transform.position.y, spawner.activeRows[currentRow].GetComponent<Row>().transform.position.z);
+        }else if(spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.road || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.desertHazard || spawner.activeRows[currentRow].GetComponent<Row>().rowType == Biome.Type.forestHazard)
+        {
+            this.transform.position = new Vector3(transform.position.x, transform.position.y, spawner.activeRows[currentRow].GetComponent<Row>().transform.position.z);
         }
     }
 
@@ -553,7 +556,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SetUpSounds() {
-
-    }
 }

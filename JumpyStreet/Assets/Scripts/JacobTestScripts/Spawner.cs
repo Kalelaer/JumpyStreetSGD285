@@ -46,10 +46,12 @@ public class Spawner : MonoBehaviour
     [Header("Row Spawn/Move Parameters")]
     [SerializeField] private float rowMoveSpeed;
     [SerializeField] PlayerController playerController;
+    private int hazardDirection;
 
     private void Awake()
     {
         Vector3 startingZoneLocation = new Vector3(0,1,-12);
+        hazardDirection = Random.Range(0, 2);
         //CreateStartingZone();
         //Instantiate(StartingZone,startingZoneLocation,Quaternion.identity);
         SpawnInitial();
@@ -275,7 +277,19 @@ public class Spawner : MonoBehaviour
 
         newRow.GetComponent<Row>().targetPos = new Vector3(newRow.transform.position.x, newRow.transform.position.y, newRow.transform.position.z);
         newRow.SetActive(true);
+        if(newRow.GetComponent<Row>().rowType == Biome.Type.water)
+        {
+            newRow.GetComponent<Row>().hazardStart = hazardDirection;
 
+            if (hazardDirection == 0)
+            {
+                hazardDirection = 1;
+            }
+            else if(hazardDirection == 1)
+            {
+                hazardDirection = 0;
+            }
+        }
 
         //spawns nodes
         if (currentBiome == "road" || currentBiome == "water" || currentBiome == "desertHazard" || currentBiome == "forestHazard") {

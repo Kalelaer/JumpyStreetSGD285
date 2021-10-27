@@ -15,7 +15,7 @@ public class Row : MonoBehaviour
     public int rowValue;
     [SerializeField] GameObject node;
     public List<GameObject> nodeArray;
-    [SerializeField] int hazardStart; //0 - Left, 1- Right
+    public int hazardStart; //0 - Left, 1- Right
     [SerializeField] GameObject platform;
     [SerializeField] GameObject startingNode;
     [SerializeField] GameObject endNode;
@@ -67,7 +67,10 @@ public class Row : MonoBehaviour
                 nodeRight.GetComponent<Node>().targetNode = nodeLeft;
                 nodeArray.Add(nodeRight);
                 nodeArray.Add(nodeLeft);
-                hazardStart = Random.Range(0, 2);
+                if(rowType != Biome.Type.water)
+                {
+                    hazardStart = Random.Range(0, 2);
+                }
                 endNode = null;
                 string side;
                 if(hazardStart == 0)
@@ -82,7 +85,7 @@ public class Row : MonoBehaviour
                 }
                 startingNode = nodeArray[hazardStart];
                 int delay = Random.Range(3,5);
-                int speed = Random.Range(1,4);
+                int speed = Random.Range(2,5);
 
 
                 StartCoroutine(SendPlatforms(side,delay,speed));
