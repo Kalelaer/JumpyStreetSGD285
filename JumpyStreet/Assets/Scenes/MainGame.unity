@@ -2282,6 +2282,126 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100499943}
   m_CullTransparentMesh: 1
+<<<<<<< Updated upstream
+=======
+--- !u!1001 &1166610637
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1106760568725280973, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_Name
+      value: spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280977, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: rowWidth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: rowMoveSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 886221558}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: mainRowsObjects.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: mainRowsObjects.Array.data[4]
+      value: 
+      objectReference: {fileID: 4037485308046311179, guid: 8fa1799c3fc9b5044a1eac5aefc354b5, type: 3}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: mainRowsObjects.Array.data[5]
+      value: 
+      objectReference: {fileID: 348891905084421595, guid: 8cadf409b9e19d24e9b38d6e3dc85246, type: 3}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[4]._isHazard
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[5]._isHazard
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[4]._biomeName
+      value: forestHazard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[4]._biomeType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[5]._biomeName
+      value: desertHazard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[5]._biomeType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[4]._maxBiomeLength
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: biomeList.Array.data[5]._maxBiomeLength
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+>>>>>>> Stashed changes
 --- !u!1 &1376774183
 GameObject:
   m_ObjectHideFlags: 0
