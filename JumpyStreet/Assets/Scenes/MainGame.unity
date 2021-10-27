@@ -606,7 +606,7 @@ GameObject:
   - component: {fileID: 379910052}
   - component: {fileID: 379910051}
   m_Layer: 5
-  m_Name: ResumeButton
+  m_Name: AgainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -679,7 +679,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 526910827}
         m_TargetAssemblyTypeName: GameMenuController, Assembly-CSharp
-        m_MethodName: OnResumeuttonClick
+        m_MethodName: OnAgainButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1382,7 +1382,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1569,7 +1569,7 @@ GameObject:
   - component: {fileID: 619520205}
   - component: {fileID: 619520204}
   m_Layer: 5
-  m_Name: ResumeButtonPanel
+  m_Name: AgainButtonPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

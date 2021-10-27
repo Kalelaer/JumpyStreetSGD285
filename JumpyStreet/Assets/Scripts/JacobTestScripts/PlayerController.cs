@@ -217,9 +217,14 @@ public class PlayerController : MonoBehaviour
         timeSinceMove += Time.deltaTime;    }
 
     public void SpawnPlayerModel() {
-        if(spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
+        backwardsMovementCount = 0;
+        if (spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
         {
-
+            if (spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child != null && spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode - 1].GetComponent<Node>().child != null && spawner.activeRows[currentRow].GetComponent<Row>().nodeArray[currentNode + 1].GetComponent<Node>().child != null && spawner.activeRows[currentRow - 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child != null && spawner.activeRows[currentRow + 2].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
+            {
+                currentRow++;
+                currentRow++;
+            }
         }
         else if (spawner.activeRows[currentRow + 1].GetComponent<Row>().nodeArray[currentNode].GetComponent<Node>().child == null)
         {
