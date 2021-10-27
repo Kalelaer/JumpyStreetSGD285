@@ -2656,6 +2656,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
+      propertyPath: rowMoveSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106760568725280979, guid: 0040eedeebd284344a988b7a908a100e, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 886221558}
